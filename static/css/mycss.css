@@ -1,0 +1,123 @@
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+    font-family: Microsoft YaHei, '宋体', Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+
+html {
+    font-size: 0.8em;
+}
+
+#top {
+    height: 40px;
+}
+
+#top > .navbar-fixed-top {
+    background: -webkit-linear-gradient(180deg, #333333, #353535); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(180deg, #333333, #353535); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(180deg, #333333, #353535); /* Firefox 3.6 - 15 */
+    background: linear-gradient(180deg, #333333, #353535); /* 标准的语法 */
+    box-shadow: 0px 0px 15px #888888;
+    min-height: 50px;
+    padding-bottom: 1px;
+    padding-top: 10px;
+}
+
+#collapseExample {
+    background-color: #2b669a;
+    margin-top: 10px;
+    padding: 10px 0px;
+    background: #e5e5ef; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#e5e5ef, #f2f2f9); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#e5e5ef, #f2f2f9); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#e5e5ef, #f2f2f9); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#e5e5ef, #f2f2f9); /* Standard syntax */
+}
+
+#collapseExample .col-md-12 {
+    padding: 10px 15px;
+}
+
+#collapseExample .row a {
+    color: #787878;
+}
+
+#collapseExample .row a ~ a {
+    margin-left: 8px;
+}
+
+
+#nav1 {
+    background-color: #2b669a;
+    margin-top: 10px;
+    /*padding: 10px 0px;*/
+    background: #e5e5ef; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#e5e5ef, #f2f2f9); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#e5e5ef, #f2f2f9); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#e5e5ef, #f2f2f9); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#e5e5ef, #f2f2f9); /* Standard syntax */
+}
+
+#nav1 .col-md-12 {
+    padding: 10px 15px;
+}
+#nav1 .row:nth-last-child(1) {
+    margin-bottom: 10px;
+}
+#nav1 .row a {
+    color: #787878;
+}
+
+#nav1 .row a ~ a {
+    margin-left: 8px;
+}
+.card_padding {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+.icon_little {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+#CourseSelect .col-md-4{
+    padding: 0px 3px;
+}
+#CourseSelect p{
+    font-style: italic;
+    font-size:0.8em ;
+}
+.icon {
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    text-align: left;
+    vertical-align: middle !important;
+}
+
+.jumbotron {
+    margin-top: 0px;
+    margin-bottom: 2px;
+}
+
+@media (max-width:768px) {
+
+}
+
+@media (min-width: 768px) and (max-width:992px) {
+
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+}
+
+@media (min-width:1200px) {
+}

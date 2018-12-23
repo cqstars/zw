@@ -1,0 +1,125 @@
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+    font-family: Microsoft YaHei, '宋体', Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+
+html {
+    font-size: 0.8em;
+}
+
+.fixtop {
+    position: fixed;
+    top: 0;
+    position: fixed;
+    top: 0px;
+    right: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+#top {
+    height: 40px;
+    line-height: 20px;
+    background: -webkit-linear-gradient(180deg, #333333, #353535); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(180deg, #333333, #353535); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(180deg, #333333, #353535); /* Firefox 3.6 - 15 */
+    background: linear-gradient(180deg, #333333, #353535); /* 标准的语法 */
+    box-shadow: 0px 0px 15px #888888;
+    padding-bottom: 1px;
+    padding-top: 10px;
+
+}
+
+#topnav {
+    display: none;
+    padding: 10px 0px;
+    background-color: #2b669a;
+    background: #e5e5ef; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#e5e5ef, #f2f2f9); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#e5e5ef, #f2f2f9); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#e5e5ef, #f2f2f9); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#e5e5ef, #f2f2f9); /* Standard syntax */
+    border-bottom: 1px #9a9a9a solid;
+    opacity: 0.9;
+}
+
+#topnav .col-md-12 {
+    padding: 10px 15px;
+}
+
+#topnav .row a {
+    color: #787878;
+}
+
+#nav1 .row a ~ a {
+    margin-left: 8px;
+}
+
+.card_padding {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+.icon_little {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+#CourseSelect .col-md-4 {
+    padding: 0px 3px;
+
+}
+
+#CourseSelect .col-md-4:hover {
+    opacity: 0.3;
+}
+
+.green:before {
+    content: '√';
+    position: absolute;
+    font-size: 4em;
+    color: #ff1934;
+    top: 10px;
+    left: 10px;
+}
+
+#CourseSelect p {
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+.icon {
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    text-align: left;
+    vertical-align: middle !important;
+}
+
+.jumbotron {
+    margin-top: 0px;
+    margin-bottom: 2px;
+}
+
+@media (max-width: 768px) {
+
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+}
+
+@media (min-width: 1200px) {
+}
