@@ -1,0 +1,225 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="icon" href="{% static 'img/favicon.ico' %}">
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8"/>
+    <link href="{% static 'css/Main.css' %}" rel="stylesheet"/>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    {% block css %}
+
+    {% endblock %}
+</head>
+<body>
+<div class="head clearfix">
+    <div class="headlogo left">
+        <h5>
+            <img src="../Images/logo/Title_Logo.png"/>
+        </h5>
+    </div>
+    <ul class="left headnav" id="headnav">
+        <li id="menu_0" class="current-menu">
+            <a href="#">测站监测</a>
+        </li>
+        <li id="menu_1">
+            <a href="#">地图展示</a>
+        </li>
+        <li id="menu_2">
+            <a href="#">系统设置</a>
+        </li>
+        <li id="menu_3">
+            <a href="#">历史数据</a>
+        </li>
+    </ul>
+    <ul class="headlink right clearfix">
+        <li id="link_0">
+            <a href="#">&nbsp;&nbsp;你好，admin</a>
+        </li>
+        <li id="link_1">
+            <a href="#">隐藏菜单</a>
+        </li>
+        <li id="link_2">
+            <a href="#">首页</a>
+        </li>
+        <li id="link_3">
+            <a href="#">帮助</a>
+        </li>
+        <li id="link_4">
+            <a href="#">退出</a>
+        </li>
+    </ul>
+</div><!--end head-->
+
+<div class="leftmenu" id="leftmenu">
+    <div id="leftmenu_0" class="leftmenu-item">
+        <dl>
+            <dt>
+                铜梁区
+            </dt>
+            <dd>
+                <ul class="clearfix">
+                    <li><a href="javascript:;" _link="lanmuguanli.html">天元桥电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">大庙宏伟电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">石虎水力发电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">洋海电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">虎峰镇马堡电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">陡洞子水电站</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl>
+            <dt>永川区</dt>
+            <dd>
+                <ul class="clearfix">
+                    <li><a href="javascript:;" _link="lanmuguanli.html">上高洞电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">下高洞电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">付家滩电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">长滩河电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">祥华电站</a></li>
+                </ul>
+            </dd>
+        </dl>
+
+
+    </div><!--end leftmenu_0-->
+    <div id="leftmenu_1" class="leftmenu-item" style="display:none;">
+        <dl>
+            <dt>铜梁区地图</dt>
+            <dd>
+                <ul class="clearfix">
+                    <li><a href="javascript:;" _link="lanmuguanli.html">天元桥电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">大庙宏伟电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">石虎水力发电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">洋海电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">虎峰镇马堡电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">陡洞子水电站</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl>
+            <dt>永川区地图</dt>
+            <dd>
+                <ul class="clearfix">
+                    <li><a href="javascript:;" _link="lanmuguanli.html">上高洞电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">下高洞电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">付家滩电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">长滩河电站</a></li>
+                    <li><a href="javascript:;" _link="lanmuguanli.html">祥华电站</a></li>
+                </ul>
+            </dd>
+        </dl>
+    </div><!--end leftmenu_1-->
+    <div id="leftmenu_2" class="leftmenu-item" style="display:none;">
+        <dl>
+            <dt>系统设置</dt>
+            <dd>
+                <ul class="clearfix">
+                    <li><a href="javascript:;" _link="wangzhanshezhi.html">网站设置</a></li>
+                    <li><a href="javascript:;">伪静态|缓存设置</a></li>
+                    <li><a href="javascript:;">在线客服设置</a></li>
+                    <li><a href="javascript:;">清除系统缓存</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl>
+            <dt>历史数据</dt>
+            <dd>
+                <ul class="clearfix">
+                    <li><a href="javascript:;">一站更新全站</a></li>
+                    <li><a href="javascript:;">更新首页</a></li>
+                    <li><a href="javascript:;">更新栏目</a></li>
+                    <li><a href="javascript:;">更新文档</a></li>
+                    <li><a href="javascript:;">更新专题</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl>
+            <dt>会员管理</dt>
+            <dd>
+                <ul class="clearfix">
+                    <li><a href="javascript:;">会员管理</a></li>
+                    <li><a href="javascript:;">会员组管理</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl>
+            <dt>管理员管理</dt>
+            <dd>
+                <ul class="clearfix">
+                    <li><a href="javascript:;">系统用户管理</a></li>
+                    <li><a href="javascript:;">用户组管理</a></li>
+                    <li><a href="javascript:;">节点列表</a></li>
+                </ul>
+            </dd>
+        </dl>
+    </div><!--end leftmenu_2-->
+    <div id="leftmenu_3" class="leftmenu-item" style="display:none;">
+        <dl>
+            <dt>扩展管理</dt>
+            <dd>
+                <ul class="clearfix">
+                    <li><a href="javascript:;">模型管理</a></li>
+                    <li><a href="javascript:;">菜单管理</a></li>
+                    <li><a href="javascript:;">数据库管理</a></li>
+                    <li><a href="javascript:;">联动管理</a></li>
+                    <li><a href="javascript:;">区域管理</a></li>
+                    <li><a href="javascript:;">数据元管理</a></li>
+                    <li><a href="javascript:;">已传文件管理</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl>
+            <dt>我的账户</dt>
+            <dd>
+                <ul class="clearfix">
+                    <li><a href="javascript:;">修改我的信息</a></li>
+                    <li><a href="javascript:;">修改密码</a></li>
+                </ul>
+            </dd>
+        </dl>
+    </div><!--end leftmenu_3-->
+
+</div>
+
+{% block content %}
+
+{% endblock %}
+
+<script type="text/javascript">
+    $(function () {
+        $("#headnav li").click(function () {
+            var _id = $(this).index();
+            $(this).addClass("current-menu").siblings().removeClass("current-menu");
+            $('#leftmenu').find('.leftmenu-item').eq(_id).css('display', 'block').siblings('.leftmenu-item').css('display', 'none');
+        })
+        //关闭显示左侧菜单
+        $('#link_1').click(function () {
+            if (false == $('#leftmenu').is(':visible')) {
+                $('#leftmenu').css('display', 'block');
+                $(this).children('a').text('隐藏菜单');
+                $('body').addClass('showleftmenu').removeClass('hideleftmenu')
+            } else {
+                $('#leftmenu').css('display', 'none');
+                $(this).children('a').text('显示菜单');
+                $('body').addClass('hideleftmenu').removeClass('showleftmenu')
+            }
+        });
+        //树形菜单值实现
+        $("#leftmenu dl dt").click(function () {
+            if (false == $(this).siblings("dd").is(":visible")) {
+                $(this).css("background-position", "right 12px");
+            }
+            else {
+                $(this).css("background-position", "right -40px");
+            }
+            $(this).siblings("dd").slideToggle("fast");
+        })
+    });
+</script>
+{% block js %}
+
+{% endblock %}
+</body>
+</html>
