@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'voucher',
+    'AccountingSubjects',
 ]
 AUTH_USER_MODEL = "users.UserProfile"
 MIDDLEWARE = [

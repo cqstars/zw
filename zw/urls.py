@@ -16,11 +16,11 @@ Including another URLconf
 from django.views.generic import TemplateView,RedirectView
 from zw.settings import *
 from django.contrib import admin
-from django.urls import path,re_path
+from django.urls import path,re_path,include
 
 
 urlpatterns = [
-
+    path('voucher/', include('voucher.urls')),
     re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
     path('admin/', admin.site.urls),
     path('',TemplateView.as_view(template_name="index.html"),name="index"),

@@ -99,7 +99,7 @@ h6 {
 .head {
     width: 100%;
     height: 70px;
-    background: url('../img/bg/head_bg.jpg') repeat-x;
+    background: url('../img/bg_/head_bg.jpg') repeat-x;
     color: #fff;
     /*box-shadow: 2px 2px 2px #B8C8D2;*/
 }
@@ -135,13 +135,14 @@ h6 {
         float: left;
         margin-top: 5px;
         margin-right: 5px;
+
     }
 
         .head .headnav li a {
             display: block;
             width: 70px;
             padding: 35px 0 5px 0;
-            background: #266c83 url('../img/bg/ico_bg.png') no-repeat;
+            background: #266c83 url('../img/bg_/ico_bg.png') no-repeat;
             text-align: center;
             border-radius: 5px;
             box-shadow: 1px 1px 1px #B8C8D2;
@@ -183,7 +184,7 @@ h6 {
 
         .headlink li a {
             padding-left: 20px;
-            background: url('../img/bg/main_link_ico.png') no-repeat;
+            background: url('../img/bg_/main_link_ico.png') no-repeat;
         }
 
         .headlink li#link_0 a {
@@ -215,7 +216,7 @@ h6 {
     left: 0;
     bottom: 0;
     z-index: 99;
-    background:url('../img/bg/left_bg.jpg') repeat-y;
+    background:url('../img/bg_/left_bg.jpg') repeat-y;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -234,7 +235,7 @@ h6 {
     box-shadow: 1px 1px 1px #B8C8D2;
     color: #fff;
     font-size: 12px;
-    background: #2A3542 url('../img/bg/ico_small.png') right 12px no-repeat;
+    background: #2A3542 url('../img/bg_/ico_small.png') right 12px no-repeat;
     cursor: pointer;
     margin-bottom:1px;
 }
@@ -273,7 +274,7 @@ h6 {
         }
 
         .leftmenu dl dd ul li a.current-menuleft {
-            background: #fff url('../img/bg/ico_small.png') right -92px no-repeat;
+            background: #fff url('../img/bg_/ico_small.png') right -92px no-repeat;
             /*font-weight: bold;*/
             color:#333;
             border-top: 1px solid #B8C8D2;
