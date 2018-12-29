@@ -18,7 +18,7 @@
     </div>
     <ul class="headnav left" id="headnav">
         <li id="menu_0" class="current-menu">
-            <a href="#">菜单管理</a>
+            <a href="#">财务单据</a>
         </li>
         <li id="menu_1">
             <a href="#">模块管理</a>
@@ -52,10 +52,10 @@
 <div class="leftmenu" id="leftmenu">
     <div id="leftmenu_0" class="leftmenu-item">
         <dl>
-            <dt>栏目管理</dt>
+            <dt>凭证管理</dt>
             <dd>
                 <ul class="clearfix">
-                    <li><a href="javascript:;" _link="lanmuguanli.html">栏目管理</a></li>
+                    <li><a href="javascript:;" _link="{% url 'voucher:index' %}">凭证输入</a></li>
                 </ul>
             </dd>
         </dl>
@@ -183,7 +183,7 @@
 
 <div class="rightmain">
     <div class="rightcontent">
-        <iframe id="main" name="main" frameborder="0" scrolling="yes" src="main.html"></iframe>
+        <iframe id="main" name="main" frameborder="0" scrolling="yes" src="{% url 'main' %}"></iframe>
     </div>
 </div>
 

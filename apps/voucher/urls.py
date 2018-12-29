@@ -6,7 +6,7 @@
 # @Software: PyCharm
 from django.urls import path
 from . import views
-
+app_name = 'voucher'
 urlpatterns = [
     path('', views.index, name='index'),
 ]
