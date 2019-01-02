@@ -1,5 +1,6 @@
 {% load static %}
 <style>
+
     .table {
         width: 100%;
         border: solid #add9c0;
@@ -22,6 +23,7 @@
     .center > td {
         text-align: center;
         padding: 2px 0px;
+        font-weight: bolder;
     }
 
     .center > td input {
@@ -49,165 +51,69 @@
     <title>凭证录入</title>
 </head>
 <body>
-<div>
+<div style="width: 100%">
     <h3>记账凭证</h3>
-
     <form>
-        <table class="table">
-            <colgroup>
-                <col/>
-                <col/>
-                <col/>
-                <col/>
-                <col/>
-            </colgroup>
-            <tbody>
+        <table style="width: 100%">
             <tr>
-                <td colspan="3" class="xl108">
-                    年 月 日
-                </td>
-                <td class="xl94" colspan="24">
-                   字 第
-                <input type="text">
-                    号
-                </td>
-                <td class="xl94">
-                </td>
-                <td class="xl95">
-                </td>
+                <td>年 月 日</td>
+                <td>字 第 号</td>
             </tr>
-            <tr>
-                <td rowspan="2" class="xl93">
-                    摘 要
-                </td>
-                <td colspan="3" class="xl93">
-                    会计科目
-                </td>
-
-                <td colspan="11" class="xl93">
-                    借方金额
-                </td>
-                <td class="xl96">
-                    　
-                </td>
-                <td colspan="11" class="xl93">
-                    贷方金额
-                </td>
-                <td class="xl96">
-                    　
-                </td>
-                <td rowspan="2" class="xl112">
-                    记账√
-                </td>
-            </tr>
-            <tr>
-                <td class="xl93">
-                    总账科目
-                </td>
-                <td class="xl93">
-                    明细科目
-                </td>
-                <td class="xl97">
-                    　明细科目(二级）
-                </td>
-                <td class="xl89" colspan="11">
-                    亿
-                </td>
-
-                <td class="xl97">
-                    　
-                </td>
-                <td class="xl89" colspan="11">
-                    亿
-                </td>
-
-                <td class="xl100">
-                    　
-                </td>
-            </tr>
-            <tr>
-                <td class="xl90">
-                    　11
-                </td>
-                <td class="xl90">
-                    　12
-                </td>
-                <td class="xl90">
-                    13　
-                </td>
-                <td class="xl98">
-                    　14
-                </td>
-                <td class="xl91" colspan="11">
-                    　
-                </td>
-
-                <td class="xl98">
-                    　
-                </td>
-                <td class="xl91" colspan="11">
-                    　19
-                </td>
-
-                <td class="xl91">
-                    　
-                </td>
-                <td class="xl90">
-                    　
-                </td>
-            </tr>
-
-            <tr>
-                <td class="xl93">
-                    附件 张
-                </td>
-                <td colspan="3" class="xl109">
-                    合 计
-                </td>
-
-                <td class="xl90" colspan="23" >
-                    　
-                </td>
-
-                <td class="xl90">
-                    　
-                </td>
-                <td class="xl90">
-                    　
-                </td>
-            </tr>
-            <tr>
-                <td class="xl107">
-                    会计主管
-                </td>
-                <td class="xl107">
-                    记账
-                </td>
-                <td class="xl107">
-                    出纳
-                </td>
-                <td class="xl107">
-                </td>
-                <td colspan="11" class="xl111">
-                    审核
-
-                </td>
-
-                <td class="xl107">
-                </td>
-                <td colspan="11" class="xl111">
-                    制单
-
-                </td>
-                <td class="xl107">
-                </td>
-                <td class="xl107">
-                </td>
-
-            </tr>
-            </tbody>
         </table>
+        <table class="table">
 
+            <tr style="text-align: center;">
+                <td style="width: 45%;text-align: center" rowspan="2">摘要</td>
+                <td style="width: 10%" colspan="2">会计科目</td>
+                <td style="width: 0.1%"></td>
+                <td style="width: 15%" rowspan="2">借方金额</td>
+                <td style="width: 0.1%"></td>
+                <td style="width: 15%" rowspan="2">贷方金额</td>
+                <td style="width: 0.1%"></td>
+                <td style="width: 4.7%" rowspan="2">记账√</td>
+            </tr>
+            <tr style="text-align: center;">
+                <td style="width: 10%">总账科目</td>
+                <td style="width: 10%">明细科目</td>
+                <td style="width: 0.1%"></td>
+
+                <td style="width: 0.1%"></td>
+
+                <td style="width: 0.1%"></td>
+
+            </tr>
+            <tr>
+                <td style="width: 45%"></td>
+                <td style="width: 10%"></td>
+                <td style="width: 10%"></td>
+                <td style="width: 0.1%"></td>
+                <td style="width: 15%"></td>
+                <td style="width: 0.1%"></td>
+                <td style="width: 15%"></td>
+                <td style="width: 0.1%"></td>
+                <td style="width: 4.7%;text-align: center"><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td style="width: 45%">附件 张</td>
+                <td style="width: 10%;text-align: right;" colspan="2">合计：</td>
+
+                <td style="width: 0.1%"></td>
+                <td style="width: 15%" colspan="3"></td>
+
+                <td style="width: 0.1%"></td>
+                <td style="width: 4.7%;text-align: center;"><input type="checkbox"></td>
+            </tr>
+        </table>
+        <table style="width: 100%">
+            <tr>
+                <td>会计主管</td>
+                <td>记账</td>
+                <td>出纳</td>
+                <td>审核</td>
+                <td>制单</td>
+            </tr>
+        </table>
+        {% csrf_token %}
     </form>
 
 
