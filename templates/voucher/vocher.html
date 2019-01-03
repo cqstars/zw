@@ -129,6 +129,12 @@
 
 
 </div>
+<div style="width:100%;height:20px;background-color: #491217; " id="AccountingSubject" onclick="f()">
+    {#    {% for itme in  latest_question_list  %}#}
+    {#        {{ itme.name }}<br/>#}
+    {##}
+    {#    {% endfor %}#}
+</div>
 <script type="text/javascript">
     function addText() {
         var div = document.getElementById("test");
@@ -140,6 +146,21 @@
         console(This.parentNode.parentNode());
         This.parentNode.parentNode.removeChild(This.parentNode);
     }
+</script>
+<script type="text/javascript">
+
+    function f() {
+        var ajax = new XMLHttpRequest();
+        ajax.open('get', '{% url "AccountingSubject:index" %}');
+        ajax.send();
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                console.log(ajax.responseText);//输入相应的内容
+                document.getElementById("AccountingSubject").innerHTML=ajax.responseText;
+            }
+        }
+    }
+
 </script>
 </body>
 </html>

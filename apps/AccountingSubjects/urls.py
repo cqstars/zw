@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2018-12-28 20:14
+# @Time    : 2019-01-03 12:36
 # @Author  : 彭涛
 # @Site    : 
-# @File    : urls.py
+# @File    : url.py
 # @Software: PyCharm
 from django.urls import path
 from . import views
-app_name = 'voucher'
+
+app_name = 'AccountingSubject'
 urlpatterns = [
-    path('voucher', views.IndexView.as_view(), name='voucher'),
     path('', views.index, name='index'),
+    path('test/<int:id>/', views.test,name='test'),
 ]
