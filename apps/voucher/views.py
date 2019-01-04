@@ -6,10 +6,11 @@ from django.http import HttpResponse
 from AccountingSubjects.models import AccountingSubject,AccountingSubject_2,AccountingSubjectCategory
 # Create your views here.
 def index(request):
-    return render(request,"voucher/vocher.html")
+    AS=AccountingSubjectCategory.objects.all()
+    return render(request,"voucher/voucher.html",{"AS":AS})
 
 class IndexView(generic.ListView):
-    template_name = "voucher/vocher.html"
+    template_name = "voucher/voucher.html"
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):

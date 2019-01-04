@@ -1,0 +1,86 @@
+{% extends "Base_Bootstrap.html" %}
+{% load static %}
+
+{% block css %}
+    <style type="text/css">
+
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container table-responsive">
+        <h3>记账凭证</h3>
+        <form>
+            <table class="table ">
+                <tr>
+                    <td>年 月 日</td>
+                    <td>字 第 号</td>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+
+                <tr class="text-center">
+                    <td style="width: 45%;text-align: center" rowspan="2">摘要</td>
+                    <td style="width: 10%;text-align: center" colspan="2">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                会计科目分类
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                {% for i in AS %}
+                                    <li><a href="{% url 'AccountingSubject:test' i.id %}">{{ i.id }}{{ i.name }}</a>
+                                    </li>
+
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+
+                    </td>
+                    <td class="text-center" style="width: 15%" rowspan="2">借方金额</td>
+                    <td class="text-center" style="width: 15%" rowspan="2">贷方金额</td>
+                    <td class="text-center" style="width: 5%" rowspan="2">记账√</td>
+                </tr>
+                <tr style="text-align: center;">
+                    <td class="text-center" style="width: 10%">总账科目</td>
+                    <td class="text-center" style="width: 10%">明细科目</td>
+
+
+                </tr>
+                <tr>
+                    <td style="width: 45%"></td>
+                    <td style="width: 10%"></td>
+                    <td style="width: 10%"></td>
+                    <td style="width: 15%"></td>
+                    <td style="width: 15%"></td>
+                    <td style="width: 5%;text-align: center"><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td style="width: 45%"></td>
+                    <td style="width: 10%"></td>
+                    <td style="width: 10%"></td>
+                    <td style="width: 15%"></td>
+                    <td style="width: 15%"></td>
+                    <td style="width: 5%;text-align: center"><input type="checkbox"></td>
+                </tr>
+                <tr>
+                    <td style="width: 45%">附件 张</td>
+                    <td style="width: 10%;text-align: right" colspan="2">合计：</td>
+                    <td style="width: 15%" colspan="2"></td>
+                    <td style="width: 5%;text-align: center"><input type="checkbox"></td>
+                </tr>
+            </table>
+            <table class="table">
+                <tr>
+                    <td>会计主管</td>
+                    <td>记账</td>
+                    <td>出纳</td>
+                    <td>审核</td>
+                    <td>制单</td>
+                </tr>
+            </table>
+            {% csrf_token %}
+        </form>
+    </div>
+{% endblock %}
