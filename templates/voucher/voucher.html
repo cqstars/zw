@@ -1,7 +1,9 @@
 {% extends "Base_Bootstrap.html" %}
 {% load static %}
-
+{% block title %}凭证录入{% endblock %}
 {% block css %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrapValidator.min.css' %}">
     <style type="text/css">
 
     </style>
@@ -9,38 +11,45 @@
 {% block content %}
     <div class="container table-responsive">
         <h3>记账凭证</h3>
-        <form>
+        <form id="RegForm" action="{% url 'voucher:voucher_make' %}" method="post" class="form-inline">
             <table class="table ">
                 <tr>
-                    <td>年 月 日</td>
-                    <td>字 第 号</td>
+                    <td style="text-align: center">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon" id="sizing-addon1">凭证日期：</span>
+                            <input size="16" type="text" value="2016-09-14" name="voucherdate" id="voucherdate" readonly
+                                   class="form_datetime form-control" aria-describedby="sizing-addon3">
+                        </div>
+
+
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <div class="row">
+                                <label>字第</label>
+                                <input class="form-control" type="text" autofocus name="voucher_no" placeholder="号"
+                                       autocomplete="off" data-bv-notempty/>
+                            </div>
+                        </div>
+
+
+                    </td>
                 </tr>
             </table>
             <table class="table table-bordered">
 
                 <tr class="text-center">
-                    <td style="width: 45%;text-align: center" rowspan="2">摘要</td>
+                    <td style="width: 45%;text-align: center" rowspan="2"><strong>摘要</strong></td>
                     <td style="width: 10%;text-align: center" colspan="2">
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                会计科目分类
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                {% for i in AS %}
-                                    <li><a href="{% url 'AccountingSubject:test' i.id %}">{{ i.id }}{{ i.name }}</a>
-                                    </li>
-
-                                {% endfor %}
-                            </ul>
-                        </div>
-
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                data-target="#voucher_setup">
+                            科目设置
+                        </button>
 
                     </td>
-                    <td class="text-center" style="width: 15%" rowspan="2">借方金额</td>
-                    <td class="text-center" style="width: 15%" rowspan="2">贷方金额</td>
-                    <td class="text-center" style="width: 5%" rowspan="2">记账√</td>
+                    <td class="text-center" style="width: 15%" rowspan="2"><strong>借方金额</strong></td>
+                    <td class="text-center" style="width: 15%" rowspan="2"><strong>贷方金额</strong></td>
+                    <td class="text-center" style="width: 5%" rowspan="2"><strong>记账√</strong></td>
                 </tr>
                 <tr style="text-align: center;">
                     <td class="text-center" style="width: 10%">总账科目</td>
@@ -48,39 +57,285 @@
 
 
                 </tr>
-                <tr>
-                    <td style="width: 45%"></td>
+                <tr class="warning">
+                    <td style="width: 45%">
+                        <input type="text" class="form-control" id="brife" placeholder="输入摘要" style="width: 100%;">
+                    </td>
                     <td style="width: 10%"></td>
                     <td style="width: 10%"></td>
-                    <td style="width: 15%"></td>
-                    <td style="width: 15%"></td>
+                    <td style="width: 15%">
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" name="dr_mount" id="dr_mount"
+                                   placeholder="借方金额">
+
+                        </div>
+
+                    </td>
+                    <td style="width: 15%">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="cr_mount" name="cr_mount" placeholder="贷方金额">
+                        </div>
+                    </td>
                     <td style="width: 5%;text-align: center"><input type="checkbox"></td>
                 </tr>
+
                 <tr>
-                    <td style="width: 45%"></td>
-                    <td style="width: 10%"></td>
-                    <td style="width: 10%"></td>
-                    <td style="width: 15%"></td>
-                    <td style="width: 15%"></td>
-                    <td style="width: 5%;text-align: center"><input type="checkbox"></td>
-                </tr>
-                <tr>
-                    <td style="width: 45%">附件 张</td>
+                    <td style="width: 45%">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon" id="sizing-addon3">附件</span>
+                            <input type="text" name="enclosure" id="enclosure" class="form-control"
+                                   aria-describedby="sizing-addon3" placeholder="张">
+                        </div>
+                    </td>
                     <td style="width: 10%;text-align: right" colspan="2">合计：</td>
-                    <td style="width: 15%" colspan="2"></td>
+                    <td style="width: 15%" colspan="2">
+                        <div class="form-group"><input type="text" class="form-control" name="total_mount"
+                                                       id="total_mount"
+                                                       placeholder="合计金额"></div>
+                    </td>
                     <td style="width: 5%;text-align: center"><input type="checkbox"></td>
                 </tr>
             </table>
             <table class="table">
                 <tr>
-                    <td>会计主管</td>
-                    <td>记账</td>
-                    <td>出纳</td>
-                    <td>审核</td>
-                    <td>制单</td>
+                    <td>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon" id="sizing-addon10">会计主管</span>
+                            <input type="text" name="accounting_supervisor" id="eaccounting_supervisor"
+                                   class="form-control"
+                                   aria-describedby="sizing-addon10">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon" id="sizing-addon11">记账</span>
+                            <input type="text" name="book_keepinger" id="book_keepinger"
+                                   class="form-control"
+                                   aria-describedby="sizing-addon11">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon" id="sizing-addon12">出纳</span>
+                            <input type="text" name="cashier" id="cashier"
+                                   class="form-control"
+                                   aria-describedby="sizing-addon11">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon" id="sizing-addon13">审核</span>
+                            <input type="text" name="auditor" id="auditor"
+                                   class="form-control"
+                                   aria-describedby="sizing-addon13">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon" id="sizing-addon14">制单</span>
+                            <input type="text" name="order_makinger" id="order_makinger"
+                                   class="form-control"
+                                   aria-describedby="sizing-addon14">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </td>
                 </tr>
             </table>
             {% csrf_token %}
+
         </form>
+
+
+    </div>
+    {#模态框#}
+    <div class="modal fade" id="voucher_setup" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">科目设置表</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    会计科目分类
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    {% for i in AS %}
+                                        <li><a onclick="provid_accounting_subject({{ i.id }})">{{ i.name }}</a>
+                                        </li>
+
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    总账科目
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="account_subject">
+                                    {% for i in AS %}
+                                        <li><a href="{% url 'AccountingSubject:account_subject_by_categoryid' i.id %}">
+                                            {{ i.id }}{{ i.name }}</a>
+                                        </li>
+
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    明细科目
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                                    {% for i in AS %}
+                                        <li><a href="{% url 'AccountingSubject:account_subject_by_categoryid' i.id %}">
+                                            {{ i.id }}{{ i.name }}</a>
+                                        </li>
+
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Modal -->
+    <!--会计一级科目明细-->
+    <div class="modal fade" id="account_subject_by_categoryid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/bootstrapValidator.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.zh-CN.js' %}"></script>
+    <script type="text/javascript">
+
+        $("#voucherdate").datetimepicker({
+            format: 'yyyy-mm-dd',
+            minView: 'month',
+            language: 'zh-CN',
+            autoclose: true,
+            startDate: '1920-01-01',
+            bootcssVer: 3
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+            });
+            $("#RegForm").bootstrapValidator({
+                message: '这种写法是没有道理的！',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+
+                    voucher_no: {
+                        validators: {
+                            notEmpty: {
+                                message: '凭证号码不能为空！'
+                            },
+                        }
+                    },
+
+                    dr_mount: {
+                        validators: {
+                            notEmpty: {
+                                message: '金额不能为空！'
+                            },
+                            regexp: {
+                                regexp: /^\d+(\.\d+)?$/,
+                                message: '金额必须是数字'
+                            }
+                        }
+                    },
+                    cr_mount: {
+                        validators: {
+                            notEmpty: {
+                                message: '金额不能为空！'
+                            },
+                            numeric: {
+                                message: '金额必须是数字'
+                            }
+                        }
+                    },
+                    total_mount: {
+                        validators: {
+                            notEmpty: {
+                                message: '金额不能为空！'
+                            },
+                            numeric: {
+                                message: '金额必须是数字'
+                            }
+                        }
+                    },
+
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        function provid_accounting_subject(accounting_ategory_id) {
+            console.log(accounting_ategory_id);
+            var url = "{% url 'AccountingSubject:account_subject_by_categoryid' 12345 %}";
+            url = url.replace('12345', accounting_ategory_id);
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (msg) {
+                    $('#account_subject_by_categoryid').find(".modal-body").html(msg);
+                    $('#account_subject_by_categoryid').modal('show');
+                    {#alert("Data Saved: " + msg);#}
+                }
+
+            });
+
+        }
+    </script>
+{% endblock %}
+

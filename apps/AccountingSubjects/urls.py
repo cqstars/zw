@@ -10,5 +10,5 @@ from . import views
 app_name = 'AccountingSubject'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('test/<int:id>/', views.test,name='test'),
+    path('account_subject_by_categoryid/<int:id>/', views.account_subject_by_categoryid,name='account_subject_by_categoryid'),
 ]

@@ -9,5 +9,6 @@ from . import views
 app_name = 'voucher'
 urlpatterns = [
     path('voucher', views.IndexView.as_view(), name='voucher'),
+    path('voucher_make', views.voucher_make.as_view(), name='voucher_make'),
     path('', views.index, name='index'),
 ]

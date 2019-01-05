@@ -2,12 +2,21 @@
 from django.shortcuts import render
 from django.views import generic
 from django.http import HttpResponse
+from django.views.generic import View
 
 from AccountingSubjects.models import AccountingSubject,AccountingSubject_2,AccountingSubjectCategory
 # Create your views here.
 def index(request):
     AS=AccountingSubjectCategory.objects.all()
     return render(request,"voucher/voucher.html",{"AS":AS})
+
+
+class voucher_make(View):
+    def get(self,request,*args,**kwargs):
+        AS = AccountingSubjectCategory.objects.all()
+        return render(request, "voucher/voucher.html", {"AS": AS})
+    def post(self,requset):
+        pass
 
 class IndexView(generic.ListView):
     template_name = "voucher/voucher.html"

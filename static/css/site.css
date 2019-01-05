@@ -8,21 +8,20 @@ font-size:12px;
 font-size:0.8em;
 }
 .navbar-default{
-    box-shadow: 2px 2px 2px #1b1e21;
+    box-shadow: 1px 1px 1px #aaaaaa;
 }
 
 img{
   max-width:100%;
 }
 
-.icon_little {
-    width: 1em;
-    height: 1em;
+.icon {
+    width: 1.5em;
+    height: 1.5em;
     vertical-align: -0.15em;
     fill: currentColor;
     overflow: hidden;
 }
-
 
 @media (max-width: 768px) {
 
