@@ -9,6 +9,8 @@ class AccountingSubjectCategory(models.Model):
         verbose_name_plural=verbose_name
     def __str__(self):
         return self.name
+    def get_accountingsubject(self):
+        return self.accountingsubject_set.all()
 
 class AccountingSubject(models.Model):
     category=models.ForeignKey(AccountingSubjectCategory,on_delete=models.CASCADE,verbose_name="会计科目大类")
@@ -23,6 +25,8 @@ class AccountingSubject(models.Model):
         verbose_name_plural=verbose_name
     def __str__(self):
         return self.name
+    def get_accountingsubject_2(self):
+        return self.accountingsubject_2_set.all()
 
 
 class AccountingSubject_2(models.Model):

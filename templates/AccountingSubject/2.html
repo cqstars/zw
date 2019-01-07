@@ -1,4 +1,23 @@
-{% for i in AS %}
-    {{ i.AccountingSubjectNo }}{{ i.name }}<br/>
-{% endfor %}
+<dl>
+    {% for i in AS %}
+        <dt>
+
+            {% if i.get_accountingsubject_2 %}
+                {{ i.id }}--{{ i.AccountingSubjectNo }}{{ i.name }}
+                {% for a in i.get_accountingsubject_2 %}
+                    <dd>
+                        <button type="button"
+                                class="btn btn-default btn-sm" style="margin-bottom: 2px;" onclick="ac_2_set({{ a.id }},{{ a.subject2_no }},{{ a.name }})">{{ a.id }}--{{ a.subject2_no }}{{ a.name }}</button>
+                    </dd>
+
+                {% endfor %}
+            {% else %}
+                <button type="button"
+                        class="btn btn-warning btn-sm"
+                        style="margin-bottom: 2px;color: #1b1e21;" onclick="ac_set({{ a.id }},{{ i.AccountingSubjectNo }},{{ i.name }})">{{ i.id }}--{{ i.AccountingSubjectNo }}{{ i.name }}</button>
+            {% endif %}
+
+        </dt>
+    {% endfor %}
+</dl>
 
