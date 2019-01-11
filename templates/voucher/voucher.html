@@ -5,6 +5,40 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrapValidator.min.css' %}">
     <style type="text/css">
+        .subjects_set {
+            position: relative;
+            pointer-events: none;
+            text-align: center;
+        }
+
+        .addtr {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .addtr:after {
+            pointer-events: auto;
+            display: block;
+            content: url({% static 'img/bg/sc.png' %});
+            position: absolute;
+            top: -10px;
+            left: 0px;
+            cursor: pointer;
+        }
+
+        #voucher_setup a {
+            cursor: pointer;
+        }
+
+        .subjects_set:after {
+            pointer-events: auto;
+            display: block;
+            content: url({% static 'img/bg/sc.png' %});
+            position: absolute;
+            top: -10px;
+            left: 0px;
+            cursor: pointer;
+        }
 
     </style>
 {% endblock %}
@@ -22,7 +56,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                          <div class="form-group">
+                        <div class="form-group">
                             <div class="row">
                                 <label>字第</label>
                                 <input class="form-control" type="text" autofocus name="voucher_no" placeholder="号"
@@ -33,16 +67,12 @@
                 </div>
             </div>
 
-            <table class="table table-bordered table-condensed">
+            <table class="table table-bordered table-condensed" id="voucher_content">
 
                 <tr class="text-center success">
-                    <td style="width: 45%;text-align: center" rowspan="2"><strong>摘要</strong></td>
+                    <td class="addtr" style="width: 45%;text-align: center" rowspan="2"><strong>摘要</strong></td>
                     <td style="width: 10%;text-align: center" colspan="2">
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                data-target="#voucher_setup">
-                            科目设置
-                        </button>
-
+                        <strong>科目设置</strong>
                     </td>
                     <td class="text-center" style="width: 15%" rowspan="2"><strong>借方金额</strong></td>
                     <td class="text-center" style="width: 15%" rowspan="2"><strong>贷方金额</strong></td>
@@ -56,14 +86,20 @@
                 </tr>
                 <tr class="danger">
                     <td style="width: 45%">
-                        <input type="text" class="form-control" id="brife" placeholder="输入摘要" style="width: 100%;">
+                        <input type="text" class="form-control" name="brife_no_1" placeholder="输入摘要"
+                               style="width: 100%;">
                     </td>
-                    <td style="width: 10%"></td>
-                    <td style="width: 10%"></td>
+                    <td class="subjects_set" style="width: 10%;">
+                        <span></span><input type="hidden" class="form-control" name="ac_no_1">
+                    </td>
+
+                    <td style="width: 10%;text-align: center;"><span></span>
+                        <input type="hidden" class="form-control" name="ac_2_no_1">
+                    </td>
                     <td style="width: 15%">
                         <div class="form-group">
 
-                            <input type="text" class="form-control" name="dr_mount" id="dr_mount"
+                            <input type="text" class="form-control" name="dr_mount_no_1"
                                    placeholder="借方金额">
 
                         </div>
@@ -71,11 +107,12 @@
                     </td>
                     <td style="width: 15%">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="cr_mount" name="cr_mount" placeholder="贷方金额">
+                            <input type="text" class="form-control" name="cr_mount_no_1" placeholder="贷方金额">
                         </div>
                     </td>
-                    <td style="width: 5%;text-align: center"><input type="checkbox"></td>
+                    <td style="width: 5%;text-align: center"><input type="checkbox" name="isBookkeeping_no_1"></td>
                 </tr>
+
 
                 <tr class="success">
                     <td style="width: 45%">
@@ -86,65 +123,72 @@
                         </div>
                     </td>
                     <td style="width: 10%;text-align: right" colspan="2">合计：</td>
-                    <td style="width: 15%" colspan="2">
-                        <div class="form-group"><input type="text" class="form-control" name="total_mount"
-                                                       id="total_mount"
-                                                       placeholder="合计金额"></div>
+                    <td style="width: 15%">
+                        <div class="form-group"><input type="text" class="form-control" name="total_drmount"
+                                                       placeholder="合计借方金额"></div>
                     </td>
-                    <td style="width: 5%;text-align: center"><input type="checkbox"></td>
+                    <td style="width: 15%">
+                        <div class="form-group"><input type="text" class="form-control" name="total_crmount"
+                                                       placeholder="合计贷方金额"></div>
+                    </td>
+                    <td style="width: 5%;text-align: center"><input type="checkbox" name="isbookkeeping"></td>
                 </tr>
             </table>
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-2"> <div class="input-group input-group-sm">
+                    <div class="col-md-2">
+                        <div class="input-group input-group-sm">
                             <span class="input-group-addon" id="sizing-addon10">会计主管</span>
                             <input type="text" name="accounting_supervisor" id="eaccounting_supervisor"
-                                   class="form-control"
-                                   aria-describedby="sizing-addon10">
-                        </div></div>
-                    <div class="col-md-2">  <div class="input-group input-group-sm">
+                                   class="form-control" aria-describedby="sizing-addon10">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group input-group-sm">
                             <span class="input-group-addon" id="sizing-addon11">记账</span>
                             <input type="text" name="book_keepinger" id="book_keepinger"
                                    class="form-control"
                                    aria-describedby="sizing-addon11">
-                        </div></div>
-                    <div class="col-md-2"> <div class="input-group input-group-sm">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group input-group-sm">
                             <span class="input-group-addon" id="sizing-addon12">出纳</span>
                             <input type="text" name="cashier" id="cashier"
                                    class="form-control"
                                    aria-describedby="sizing-addon11">
-                        </div></div>
-                    <div class="col-md-2"> <div class="input-group input-group-sm">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group input-group-sm">
                             <span class="input-group-addon" id="sizing-addon13">审核</span>
                             <input type="text" name="auditor" id="auditor"
                                    class="form-control"
                                    aria-describedby="sizing-addon13">
-                        </div></div>
-                    <div class="col-md-4"> <div class="input-group input-group-sm">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-sm">
                             <span class="input-group-addon" id="sizing-addon14">制单</span>
                             <input type="text" name="order_makinger" id="order_makinger"
                                    class="form-control"
                                    aria-describedby="sizing-addon14">
-                        </div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <table class="table">
                 <tr>
                     <td>
-
                     </td>
                     <td>
-
                     </td>
                     <td>
-
                     </td>
                     <td>
-
                     </td>
                     <td>
-
                     </td>
                 </tr>
                 <tr>
@@ -175,7 +219,6 @@
                         {% for i in AS %}
                             <li><a onclick="provid_accounting_subject({{ i.id }})">{{ i.name }}</a>
                             </li>
-
                         {% endfor %}
                     </ul>
                 </div>
@@ -222,7 +265,43 @@
         });
     </script>
     <script type="text/javascript">
+        var trnumber = null;
         $(document).ready(function () {
+            $('.subjects_set').on('click', function (e) {
+                trnumber = $(this);
+                $('#voucher_setup').modal('show');
+            });
+            $('.addtr').on('click', function (e) {
+                if (confirm("插入明细栏？")) {
+
+                    var tb = document.getElementById("voucher_content");
+                    var trIndex = tb.rows.length - 1;
+                    console.log(trIndex - 1);
+                    var newTr = tb.insertRow(trIndex);//添加新行，trIndex就是要添加的位置
+                    newTr.setAttribute('class', 'danger');
+                    var newTd1 = newTr.insertCell();
+                    newTd1.innerHTML = "<input type=\"text\" class=\"form-control\" name=\"brife_no_" + trIndex + "\" placeholder=\"输入摘要\" style=\"width: 100%;\">";
+                    var newTd2 = newTr.insertCell();
+                    newTd2.className = "subjects_set";
+                    newTd2.innerHTML = "<span></span><input type=\"hidden\" class=\"form-control\" name=\"ac_no_" + trIndex + "\">";
+                    var newTd3 = newTr.insertCell();
+                    newTd3.style = "width: 10%;text-align: center;";
+                    newTd3.innerHTML = "<span></span> <input type=\"hidden\" class=\"form-control\" name=\"ac_2_no_1\">";
+                    var newTd4 = newTr.insertCell();
+                    newTd4.style = "width: 15%";
+                    newTd4.innerHTML = " <div class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"dr_mount_no_" + trIndex + "\" placeholder=\"借方金额\" onblur=\"validateNum(this)\"></div>";
+                    var newTd5 = newTr.insertCell();
+                    newTd5.style = "width: 15%";
+                    newTd5.innerHTML = " <div class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"dr_mount_no_" + trIndex + "\" placeholder=\"贷方金额\" onblur=\"validateNum(this)\"></div>";
+                    var newTd6 = newTr.insertCell();
+                    newTd6.style = "width: 5%;text-align: center";
+                    newTd6.innerHTML = "<input type=\"checkbox\" name=\"isBookkeeping_no_"+trIndex+"\">";
+
+                }
+                else {
+                }
+
+            });
             $.ajaxSetup({
                 data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
             });
@@ -242,8 +321,7 @@
                             },
                         }
                     },
-
-                    dr_mount: {
+                    dr_mount_no_1: {
                         validators: {
                             notEmpty: {
                                 message: '金额不能为空！'
@@ -254,7 +332,19 @@
                             }
                         }
                     },
-                    cr_mount: {
+                    cr_mount_no_1: {
+                        validators: {
+                            notEmpty: {
+                                message: '金额不能为空！'
+                            },
+                            regexp: {
+                                regexp: /^\d+(\.\d+)?$/,
+                                message: '金额必须是数字'
+                            }
+                        }
+                    },
+
+                    total_drmount: {
                         validators: {
                             notEmpty: {
                                 message: '金额不能为空！'
@@ -264,7 +354,7 @@
                             }
                         }
                     },
-                    total_mount: {
+                    total_crmount: {
                         validators: {
                             notEmpty: {
                                 message: '金额不能为空！'
@@ -278,6 +368,20 @@
                 }
             });
         })
+    </script>
+    <script type="text/javascript">
+        function validateNum(a) {
+            var patrn = /^-?\d+\.?\d{0,2}$/;
+            if (patrn.test(a.value)) {
+                console.log(a.value);
+            }
+            else {
+                a.value = "";
+                a.onfocus;
+                alert("输入有效金额！");
+            }
+
+        }
     </script>
     <script type="text/javascript">
         function provid_accounting_subject(accounting_ategory_id) {
@@ -296,15 +400,22 @@
             });
 
         }
+
     </script>
     <script type="text/javascript">
-        function ac_2_set(a,b,c) {
-            alert("a");
+        function ac_2_set(acid, acname, ac2id, ac2name) {
+            console.log(acid, acname, ac2id, ac2name);
+            trnumber.find("span").html(acname);
+            trnumber.find("input").val(acid);
+            trnumber.next().find("span").html(ac2name);
+            trnumber.next().find("input").val(ac2id);
         }
 
-        function ac_set(a,b,c) {
-            alert("a");
+        function ac_set(acid, acname) {
+            trnumber.find("span").html(acname);
+            trnumber.find("input").val(acid);
         }
+
     </script>
 {% endblock %}
 
