@@ -35,7 +35,7 @@ class IndexView(generic.ListView):
 class voucher_formView(View):
     def get(self,request):
         form=vocher_form()
-        return render(request, 'voucher/voucher_make_form.html', {'form': form})
+        return render(request, 'voucher/test.html', {'form': form})
     def post(self,request):
         f = vocher_form(request.POST)
         if f.is_valid():

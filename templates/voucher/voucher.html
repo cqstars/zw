@@ -11,6 +11,22 @@
             text-align: center;
         }
 
+        .deletetr {
+            position: relative;
+            pointer-events: none;
+            text-align: center;
+        }
+
+        .deletetr:after {
+            pointer-events: auto;
+            display: block;
+            content: url({% static 'img/bg/deltr.jpg' %});
+            position: absolute;
+            top: 2px;
+            left: 0px;
+            cursor: pointer;
+        }
+
         .addtr {
             position: relative;
             pointer-events: none;
@@ -19,7 +35,7 @@
         .addtr:after {
             pointer-events: auto;
             display: block;
-            content: url({% static 'img/bg/sc.png' %});
+            content: url({% static 'img/bg/addtr.png' %});
             position: absolute;
             top: -10px;
             left: 0px;
@@ -100,14 +116,15 @@
                         <div class="form-group">
 
                             <input type="text" class="form-control" name="dr_mount_no_1"
-                                   placeholder="借方金额">
+                                   placeholder="借方金额" onchange="validateNum(this)">
 
                         </div>
 
                     </td>
                     <td style="width: 15%">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="cr_mount_no_1" placeholder="贷方金额">
+                            <input type="text" class="form-control" name="cr_mount_no_1" placeholder="贷方金额"
+                                   onchange="validateNum(this)">
                         </div>
                     </td>
                     <td style="width: 5%;text-align: center"><input type="checkbox" name="isBookkeeping_no_1"></td>
@@ -125,11 +142,11 @@
                     <td style="width: 10%;text-align: right" colspan="2">合计：</td>
                     <td style="width: 15%">
                         <div class="form-group"><input type="text" class="form-control" name="total_drmount"
-                                                       placeholder="合计借方金额"></div>
+                                                       placeholder="合计借方金额" onchange="validateNum(this)"></div>
                     </td>
                     <td style="width: 15%">
                         <div class="form-group"><input type="text" class="form-control" name="total_crmount"
-                                                       placeholder="合计贷方金额"></div>
+                                                       placeholder="合计贷方金额" onchange="validateNum(this)"></div>
                     </td>
                     <td style="width: 5%;text-align: center"><input type="checkbox" name="isbookkeeping"></td>
                 </tr>
@@ -248,6 +265,10 @@
             </div>
         </div>
     </div>
+
+    <div id="myerror" class="text-center">
+        <span class="glyphicon glyphicon-remove"></span> 你的金额输入有误！
+    </div>
 {% endblock %}
 {% block js %}
     <script type="text/javascript" src="{% static 'js/bootstrapValidator.min.js' %}"></script>
@@ -265,12 +286,18 @@
         });
     </script>
     <script type="text/javascript">
+        //科目设置
         var trnumber = null;
         $(document).ready(function () {
             $('.subjects_set').on('click', function (e) {
                 trnumber = $(this);
                 $('#voucher_setup').modal('show');
             });
+
+            $(".deletetr").delegate("button", "click", function () {
+                alert(this);
+            });
+
             $('.addtr').on('click', function (e) {
                 if (confirm("插入明细栏？")) {
 
@@ -280,6 +307,7 @@
                     var newTr = tb.insertRow(trIndex);//添加新行，trIndex就是要添加的位置
                     newTr.setAttribute('class', 'danger');
                     var newTd1 = newTr.insertCell();
+                    newTd1.className = "deletetr";
                     newTd1.innerHTML = "<input type=\"text\" class=\"form-control\" name=\"brife_no_" + trIndex + "\" placeholder=\"输入摘要\" style=\"width: 100%;\">";
                     var newTd2 = newTr.insertCell();
                     newTd2.className = "subjects_set";
@@ -289,101 +317,52 @@
                     newTd3.innerHTML = "<span></span> <input type=\"hidden\" class=\"form-control\" name=\"ac_2_no_1\">";
                     var newTd4 = newTr.insertCell();
                     newTd4.style = "width: 15%";
-                    newTd4.innerHTML = " <div class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"dr_mount_no_" + trIndex + "\" placeholder=\"借方金额\" onblur=\"validateNum(this)\"></div>";
+                    newTd4.innerHTML = " <div class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"dr_mount_no_" + trIndex + "\" placeholder=\"借方金额\" onchange=\"validateNum(this)\"></div>";
                     var newTd5 = newTr.insertCell();
                     newTd5.style = "width: 15%";
-                    newTd5.innerHTML = " <div class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"dr_mount_no_" + trIndex + "\" placeholder=\"贷方金额\" onblur=\"validateNum(this)\"></div>";
+                    newTd5.innerHTML = " <div class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"dr_mount_no_" + trIndex + "\" placeholder=\"贷方金额\" onchange=\"validateNum(this)\"></div>";
                     var newTd6 = newTr.insertCell();
                     newTd6.style = "width: 5%;text-align: center";
-                    newTd6.innerHTML = "<input type=\"checkbox\" name=\"isBookkeeping_no_"+trIndex+"\">";
+                    newTd6.innerHTML = "<input type=\"checkbox\" name=\"isBookkeeping_no_" + trIndex + "\">";
 
                 }
                 else {
                 }
 
             });
-            $.ajaxSetup({
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
-            });
-            $("#RegForm").bootstrapValidator({
-                message: '这种写法是没有道理的！',
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
 
-                    voucher_no: {
-                        validators: {
-                            notEmpty: {
-                                message: '凭证号码不能为空！'
-                            },
-                        }
-                    },
-                    dr_mount_no_1: {
-                        validators: {
-                            notEmpty: {
-                                message: '金额不能为空！'
-                            },
-                            regexp: {
-                                regexp: /^\d+(\.\d+)?$/,
-                                message: '金额必须是数字'
-                            }
-                        }
-                    },
-                    cr_mount_no_1: {
-                        validators: {
-                            notEmpty: {
-                                message: '金额不能为空！'
-                            },
-                            regexp: {
-                                regexp: /^\d+(\.\d+)?$/,
-                                message: '金额必须是数字'
-                            }
-                        }
-                    },
 
-                    total_drmount: {
-                        validators: {
-                            notEmpty: {
-                                message: '金额不能为空！'
-                            },
-                            numeric: {
-                                message: '金额必须是数字'
-                            }
-                        }
-                    },
-                    total_crmount: {
-                        validators: {
-                            notEmpty: {
-                                message: '金额不能为空！'
-                            },
-                            numeric: {
-                                message: '金额必须是数字'
-                            }
-                        }
-                    },
-
-                }
-            });
         })
     </script>
     <script type="text/javascript">
+
+        //Validator
         function validateNum(a) {
+            var parent = a.parentNode;
             var patrn = /^-?\d+\.?\d{0,2}$/;
             if (patrn.test(a.value)) {
                 console.log(a.value);
+                parent.classList.remove('has-warning');
+                document.getElementById('myerror').style.visibility = 'hidden';
             }
             else {
                 a.value = "";
-                a.onfocus;
-                alert("输入有效金额！");
+                parent.setAttribute('class', 'has-warning');
+                a.focus();
+                a.select();
+
+                document.getElementById('myerror').style.top = a.getBoundingClientRect().y - 40 + 'px';
+                document.getElementById('myerror').style.left = a.getBoundingClientRect().x - 20 + 'px';
+                document.getElementById('myerror').style.visibility = 'visible';
+
             }
 
         }
+
+
     </script>
     <script type="text/javascript">
+        //第一个下拉框根据科目分类获取一级科目，其中url传参是替换法
         function provid_accounting_subject(accounting_ategory_id) {
             console.log(accounting_ategory_id);
             var url = "{% url 'AccountingSubject:account_subject_by_categoryid' 12345 %}";
@@ -404,7 +383,6 @@
     </script>
     <script type="text/javascript">
         function ac_2_set(acid, acname, ac2id, ac2name) {
-            console.log(acid, acname, ac2id, ac2name);
             trnumber.find("span").html(acname);
             trnumber.find("input").val(acid);
             trnumber.next().find("span").html(ac2name);

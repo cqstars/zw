@@ -3,19 +3,40 @@ body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
 }
 
 html {
-    font-size:100%;
-font-size:12px;
-font-size:0.8em;
+    font-size: 100%;
+    font-size: 12px;
+    font-size: 0.8em;
 }
-.navbar-default{
+
+.navbar-default {
     box-shadow: 1px 1px 1px #aaaaaa;
 }
 
-img{
-  max-width:100%;
+img {
+    max-width: 100%;
 }
-#RegForm .row{padding: 2px;}
-#RegForm .row .col-md-2{margin-bottom: 1px}
+
+#RegForm .row {
+    padding: 2px;
+}
+
+#RegForm .row .col-md-2 {
+    margin-bottom: 1px
+}
+
+#myerror {
+    width: 150px;
+    height: 30px;
+    color:#ffffff;
+    background-color: #ff9900;
+    -moz-box-shadow: 2px 2px 1px #888888; /* 老的 Firefox */
+    box-shadow: 2px 2px 1px #888888;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+}
 
 .icon {
     width: 1.5em;
