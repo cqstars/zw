@@ -32,14 +32,15 @@ class IndexView(generic.ListView):
         c=e.category
         return c
 
-class voucher_formView(View):
+class voucher_input(View):
     def get(self,request):
         form=vocher_form()
-        return render(request, 'voucher/test.html', {'form': form})
+        AS = AccountingSubjectCategory.objects.all()
+        return render(request, 'voucher/voucher_input.html',{"AS": AS, 'form': form})
     def post(self,request):
         f = vocher_form(request.POST)
         if f.is_valid():
             print(f.cleaned_data)
-            return render(request,'voucher/voucher_make_form.html', {'form': f})
+            return render(request,'voucher/voucher_input.html', {'form': f})
         else:
-            return render(request, "voucher/voucher_make_form.html", {"error": f.errors, "form": f})
+            return render(request, "voucher/voucher_input.html", {"error": f.errors, "form": f})

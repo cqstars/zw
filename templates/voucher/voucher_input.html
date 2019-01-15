@@ -1,0 +1,321 @@
+{% extends "iframe_base.html" %}
+{% load static %}
+{% block title %}凭证录入{% endblock %}
+{% block css %}
+    <style>
+        #AccountingSubjectSelector {
+            width: 80%;
+            visibility: hidden;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 10;
+            background-color: #d0e9c6;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 3px 3px 2px #aaaaaa;
+            border: 1px solid;
+            border-radius: 5px;
+            -moz-border-radius: 5px; /* Old Firefox */
+        }
+
+        #AccountingSubjectSelector a {
+            color: #a41515;
+        }
+
+        #AccountingSubjectSelector li {
+            list-style: none;
+            margin-right: 10px;
+        }
+
+        #AccountingSubjectSelector > ul > li ul {
+            display: none;
+
+        }
+
+        #AccountingSubjectSelector > ul > li > ul > li:hover ul { /*鼠标划过二级菜单的时候对应的三级菜单显示*/
+            display: block;
+        }
+    </style>
+{% endblock %}
+{% block breadcrumb %}
+    <h3 class="text-center">记账凭证</h3>
+{% endblock %}
+{% block content %}
+    <div id="AccountingSubjectSelector">
+        <ul>
+            {% for i in AS %}
+                <li style="clear: both;" onclick="ac_set(this)">{{ i.name }}
+                    <ul>
+                        {% for a in i.get_accountingsubject %}
+                            {% if a.get_accountingsubject_2 %}
+                                <li style="float: left">{{ a.name }}
+                                    <ul>
+                                        {% for b in a.get_accountingsubject_2 %}
+                                            <li style="clear: both;"><a>{{ b.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li style="float: left"><a>{{ a.name }}</a>
+
+                                </li>
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="myerror" class="text-center">
+        <img src="{% static 'img/bg/wrong.png' %}" style="display: inline;width: 15px;">你的金额输入有误！
+    </div>
+
+    <form id="RegForm" action="{% url 'voucher:voucher_input' %}" method="post" onsubmit="return validate_form(this)">
+        <table style="width: 100%">
+            <tr>
+                <td>
+
+                </td>
+                <td><span>凭证日期：</span>
+                    <input type="date" id="txtDate" name="voucherdate" autocomplete="on"/>
+                <td><label>字第</label>
+                    <input type="text" autofocus name="voucher_no" placeholder="号"/></td>
+            </tr>
+        </table>
+        <table class="table" id="voucher_content">
+
+            <tr>
+                <td style="width:3%" colspan="2" rowspan="2">
+                    <img src="{% static 'img/bg/Insert_B.png' %}" title="插入栏目" style="cursor:pointer;"
+                         onclick="addtr()">
+                </td>
+
+                <td style="width: 40%;" rowspan="2"><strong>摘要</strong></td>
+                <td style="width: 10%;text-align: center" colspan="2">
+                    <strong>科目设置</strong>
+                </td>
+                <td class="text-center" style="width: 15%" rowspan="2"><strong>借方金额</strong></td>
+                <td class="text-center" style="width: 15%" rowspan="2"><strong>贷方金额</strong></td>
+                <td class="text-center" style="width: 5%" rowspan="2"><strong>记账√</strong></td>
+            </tr>
+            <tr>
+
+                <td class="text-center" style="width: 10%">总账科目</td>
+                <td class="text-center" style="width: 10%">明细科目</td>
+
+
+            </tr>
+            <tr>
+                <td style="width:3%"></td>
+                <td style="width:2%"><img src="{% static 'img/bg/ac_s.png' %}" title="科目设置"
+                                          onclick="subjects_set(this)">
+                </td>
+                <td style="width: 40%">
+                    <input class="width90" type="text" name="brife_no_1" placeholder="输入摘要" required="required"
+                           autocomplete="on">
+                </td>
+                <td class="subjects_set" style="width: 10%;">
+                    <span></span><input type="hidden" class="form-control" name="ac_no_1">
+                </td>
+
+                <td style="width: 10%;text-align: center;"><span></span>
+                    <input type="hidden" class="form-control" name="ac_2_no_1">
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="dr_mount_no_1"
+                           placeholder="借方金额" onchange="validateNum(this)">
+
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="cr_mount_no_1" placeholder="贷方金额"
+                           onchange="validateNum(this)">
+                </td>
+                <td style="width: 5%;text-align: center"><input type="checkbox" name="isBookkeeping_no_1"></td>
+            </tr>
+
+
+            <tr class="success">
+                <td style="width:3%" colspan="3">
+                    <span>附件</span>
+                    <input type="text" name="enclosure" id="enclosure" class="form-control"
+                           aria-describedby="sizing-addon3" placeholder="张">
+                </td>
+                <td style="width: 10%;text-align: right" colspan="2">合计：</td>
+                <td style="width: 15%">
+                    <input type="text" class="form-control" name="total_drmount"
+                           placeholder="合计借方金额" onchange="validateNum(this)">
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="total_crmount"
+                           placeholder="合计贷方金额" onchange="validateNum(this)">
+                </td>
+                <td style="width: 5%;text-align: center"><input type="checkbox" name="isbookkeeping"></td>
+            </tr>
+        </table>
+
+
+        <table style="width: 100%">
+            <tr>
+                <td>
+                    <span class="input-group-addon" id="sizing-addon10">会计主管</span>
+                    <input type="text" name="accounting_supervisor" id="eaccounting_supervisor"
+                           class="form-control" aria-describedby="sizing-addon10">
+                </td>
+                <td>
+                    <span class="input-group-addon" id="sizing-addon11">记账</span>
+                    <input type="text" name="book_keepinger" id="book_keepinger"
+                           class="form-control"
+                           aria-describedby="sizing-addon11">
+                </td>
+                <td>
+                    <span class="input-group-addon" id="sizing-addon12">出纳</span>
+                    <input type="text" name="cashier" id="cashier"
+                           class="form-control"
+                           aria-describedby="sizing-addon11">
+                </td>
+                <td>
+                    <span class="input-group-addon" id="sizing-addon13">审核</span>
+                    <input type="text" name="auditor" id="auditor"
+                           class="form-control"
+                           aria-describedby="sizing-addon13">
+                </td>
+                <td>
+                    <span class="input-group-addon" id="sizing-addon14">制单</span>
+                    <input type="text" name="order_makinger" id="order_makinger"
+                           class="form-control"
+                           aria-describedby="sizing-addon14">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: right">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </td>
+            </tr>
+        </table>
+
+        {% csrf_token %}
+
+    </form>
+
+
+    </div>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+        //Validator
+        function validateNum(a) {
+            var parent = a.parentNode;
+            var patrn = /^-?\d+\.?\d{0,2}$/;
+            if (patrn.test(a.value)) {
+                console.log(a.value);
+                parent.classList.remove('has-warning');
+                document.getElementById('myerror').style.visibility = 'hidden';
+            }
+            else {
+                a.value = "";
+                parent.setAttribute('class', 'has-warning');
+                a.focus();
+                a.select();
+
+                document.getElementById('myerror').style.top = a.getBoundingClientRect().y - 40 + 'px';
+                document.getElementById('myerror').style.left = a.getBoundingClientRect().x - 20 + 'px';
+                document.getElementById('myerror').style.visibility = 'visible';
+
+            }
+
+        }
+
+    </script>
+    <script type="text/javascript">
+        function addtr() {
+            if (confirm("插入明细栏？")) {
+
+                var tb = document.getElementById("voucher_content");
+                var trIndex = tb.rows.length - 1;
+                var newTr = tb.insertRow(trIndex);//添加新行，trIndex就是要添加的位置
+                var newTd0 = newTr.insertCell();
+                newTd0.innerHTML = "<img src=\"{% static 'img/bg/deletetr.png' %}\" title=\"删除栏目\" onclick=\"deltr(this)\">";
+                var newTd01 = newTr.insertCell();
+                newTd01.innerHTML = "<img src=\"{% static 'img/bg/ac_s.png' %}\" title=\"科目设置\" onclick=\"subjects_set(this)\">";
+                var newTd1 = newTr.insertCell();
+                newTd1.innerHTML = "<input type=\"text\" name=\"brife_no_" + trIndex + "\" placeholder=\"输入摘要\"  style=\"width: 90%;\">";
+                var newTd2 = newTr.insertCell();
+                newTd2.className = "subjects_set";
+                newTd2.innerHTML = "<span></span><input type=\"hidden\"  name=\"ac_no_" + trIndex + "\">";
+                var newTd3 = newTr.insertCell();
+                newTd3.style = "width: 10%;";
+                newTd3.innerHTML = "<span></span> <input type=\"hidden\" name=\"ac_2_no_1\">";
+                var newTd4 = newTr.insertCell();
+                newTd4.style = "width: 15%";
+                newTd4.innerHTML = "<input type=\"text\" name=\"dr_mount_no_" + trIndex + "\" placeholder=\"借方金额\" onchange=\"validateNum(this)\">";
+                var newTd5 = newTr.insertCell();
+                newTd5.style = "width: 15%";
+                newTd5.innerHTML = "<input type=\"text\" name=\"dr_mount_no_" + trIndex + "\" placeholder=\"贷方金额\" onchange=\"validateNum(this)\">";
+                var newTd6 = newTr.insertCell();
+                newTd6.style = "width: 5%;";
+                newTd6.innerHTML = "<input type=\"checkbox\" name=\"isBookkeeping_no_" + trIndex + "\">";
+
+            }
+            else {
+            }
+
+        }
+
+        function deltr(a) {
+            if (confirm("确认删除此明细栏？")) {
+                a.parentNode.parentNode.parentNode.removeChild(a.parentNode.parentNode);
+            }
+            else {
+            }
+
+        }
+    </script>
+    <script type="text/javascript">
+
+        function subjects_set(a) {
+
+            var subj = document.querySelector("#AccountingSubjectSelector");
+            if (subj.style.visibility == "hidden") {
+                subj.style.visibility = "visible";
+            }
+            else {
+                subj.style.visibility = "hidden";
+            }
+
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        function ac_2_set(a) {
+            {#trnumber.find("span").html(acname);#}
+            {#trnumber.find("input").val(acid);#}
+            {#trnumber.next().find("span").html(ac2name);#}
+            {#trnumber.next().find("input").val(ac2id);#}
+            if (a.childNodes[1].style.display == "block") {
+                a.childNodes[1].style.display = "none";
+            } else {
+                a.childNodes[1].style.display = "block";
+            }
+        }
+
+
+        function ac_set(a) {
+            {#trnumber.find("span").html(acname);#}
+            {#trnumber.find("input").val(acid);#}
+            console.log(a.childNodes)
+            if (a.childNodes[1].style.display == "block") {
+                a.childNodes[1].style.display = "none";
+            } else {
+                a.childNodes[1].style.display = "block";
+            }
+        }
+    </script>
+
+
+{% endblock %}
+
