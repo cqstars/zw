@@ -4,7 +4,6 @@
 {% block css %}
     <style>
         #AccountingSubjectSelector {
-            width: 80%;
             visibility: hidden;
             position: absolute;
             top: 0px;
@@ -33,6 +32,10 @@
 
         }
 
+        .nav > ul > li:hover > a + ul { /*鼠标划过一级菜单的时候二级菜单显示*/
+            display: block;
+        }
+
         #AccountingSubjectSelector > ul > li > ul > li:hover ul { /*鼠标划过二级菜单的时候对应的三级菜单显示*/
             display: block;
         }
@@ -49,15 +52,17 @@
                     <ul>
                         {% for a in i.get_accountingsubject %}
                             {% if a.get_accountingsubject_2 %}
-                                <li style="float: left">{{ a.name }}
+                                <li>{{ a.name }}
                                     <ul>
                                         {% for b in a.get_accountingsubject_2 %}
-                                            <li style="clear: both;"><a>{{ b.name }}</a></li>
+                                            <li style="clear: both;"><a
+                                                    onclick="SubjectSelect2('{{ a.id }}','{{ a.name }}','{{ b.id }}','{{ b.name }}')">
+                                                {{ b.name }}{{ b.subject2_no }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </li>
                             {% else %}
-                                <li style="float: left"><a>{{ a.name }}</a>
+                                <li><a onclick="SubjectSelect1('{{ a.id }}','{{ a.name }}')">{{ a.name }}</a>
 
                                 </li>
                             {% endif %}
@@ -111,14 +116,13 @@
             </tr>
             <tr>
                 <td style="width:3%"></td>
-                <td style="width:2%"><img src="{% static 'img/bg/ac_s.png' %}" title="科目设置"
-                                          onclick="subjects_set(this)">
+                <td style="width:2%"><img src="{% static 'img/bg/ac_s.png' %}" title="科目设置">
                 </td>
                 <td style="width: 40%">
                     <input class="width90" type="text" name="brife_no_1" placeholder="输入摘要" required="required"
                            autocomplete="on">
                 </td>
-                <td class="subjects_set" style="width: 10%;">
+                <td style="width: 10%;cursor: pointer;" onclick="subjects_set(this)">
                     <span></span><input type="hidden" class="form-control" name="ac_no_1">
                 </td>
 
@@ -240,11 +244,12 @@
                 var newTd0 = newTr.insertCell();
                 newTd0.innerHTML = "<img src=\"{% static 'img/bg/deletetr.png' %}\" title=\"删除栏目\" onclick=\"deltr(this)\">";
                 var newTd01 = newTr.insertCell();
-                newTd01.innerHTML = "<img src=\"{% static 'img/bg/ac_s.png' %}\" title=\"科目设置\" onclick=\"subjects_set(this)\">";
+                newTd01.innerHTML = "<img src=\"{% static 'img/bg/ac_s.png' %}\" title=\"科目设置\">";
                 var newTd1 = newTr.insertCell();
                 newTd1.innerHTML = "<input type=\"text\" name=\"brife_no_" + trIndex + "\" placeholder=\"输入摘要\"  style=\"width: 90%;\">";
                 var newTd2 = newTr.insertCell();
-                newTd2.className = "subjects_set";
+                newTd2.setAttribute("onclick", "subjects_set(this)");
+                newTd2.style.cursor = "pointer";
                 newTd2.innerHTML = "<span></span><input type=\"hidden\"  name=\"ac_no_" + trIndex + "\">";
                 var newTd3 = newTr.insertCell();
                 newTd3.style = "width: 10%;";
@@ -275,9 +280,8 @@
         }
     </script>
     <script type="text/javascript">
-
+   //点击表格格子，打开科目设置框
         function subjects_set(a) {
-
             var subj = document.querySelector("#AccountingSubjectSelector");
             if (subj.style.visibility == "hidden") {
                 subj.style.visibility = "visible";
@@ -287,34 +291,26 @@
             }
 
         }
-    </script>
-
-
-    <script type="text/javascript">
-        function ac_2_set(a) {
-            {#trnumber.find("span").html(acname);#}
-            {#trnumber.find("input").val(acid);#}
-            {#trnumber.next().find("span").html(ac2name);#}
-            {#trnumber.next().find("input").val(ac2id);#}
-            if (a.childNodes[1].style.display == "block") {
-                a.childNodes[1].style.display = "none";
-            } else {
-                a.childNodes[1].style.display = "block";
-            }
-        }
-
-
+        //打开一级科目，没有用css ahover来做
         function ac_set(a) {
-            {#trnumber.find("span").html(acname);#}
-            {#trnumber.find("input").val(acid);#}
-            console.log(a.childNodes)
+
             if (a.childNodes[1].style.display == "block") {
                 a.childNodes[1].style.display = "none";
             } else {
                 a.childNodes[1].style.display = "block";
             }
         }
+         //点击科目设置
+        function SubjectSelect1(a, b) {
+            console.log(a, b);
+        }
+
+        function SubjectSelect2(a, b, c, d) {
+            console.log(a, b, c, d);
+        }
+
     </script>
+
 
 
 {% endblock %}
