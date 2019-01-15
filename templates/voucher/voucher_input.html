@@ -123,7 +123,7 @@
                            autocomplete="on">
                 </td>
                 <td style="width: 10%;cursor: pointer;" onclick="subjects_set(this)">
-                    <span></span><input type="hidden" class="form-control" name="ac_no_1">
+                    <span></span><input type="hidden" name="ac_no_1">
                 </td>
 
                 <td style="width: 10%;text-align: center;"><span></span>
@@ -280,8 +280,13 @@
         }
     </script>
     <script type="text/javascript">
-   //点击表格格子，打开科目设置框
+        var accountingsubjectselector = {}
+    </script>
+    <script type="text/javascript">
+        //点击表格格子，打开科目设置框
         function subjects_set(a) {
+            accountingsubjectselector.selectedtr = a;
+
             var subj = document.querySelector("#AccountingSubjectSelector");
             if (subj.style.visibility == "hidden") {
                 subj.style.visibility = "visible";
@@ -291,6 +296,7 @@
             }
 
         }
+
         //打开一级科目，没有用css ahover来做
         function ac_set(a) {
 
@@ -300,13 +306,20 @@
                 a.childNodes[1].style.display = "block";
             }
         }
-         //点击科目设置
+
+        //点击科目设置
         function SubjectSelect1(a, b) {
-            console.log(a, b);
+            accountingsubjectselector.selectedtr.querySelector("span").innerHTML = b;
+            accountingsubjectselector.selectedtr.querySelector("input").value = a;
+            document.querySelector("#AccountingSubjectSelector").style.visibility = "hidden";//设置完成关闭设置框
         }
 
         function SubjectSelect2(a, b, c, d) {
-            console.log(a, b, c, d);
+            accountingsubjectselector.selectedtr.querySelector("span").innerHTML = b;
+            accountingsubjectselector.selectedtr.querySelector("input").value = a;
+            accountingsubjectselector.selectedtr.parentNode.cells[4].querySelector("span").innerHTML = d;
+            accountingsubjectselector.selectedtr.parentNode.cells[4].querySelector("input").value = c;
+            document.querySelector("#AccountingSubjectSelector").style.visibility = "hidden";//设置完成关闭设置框
         }
 
     </script>
