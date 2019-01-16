@@ -41,6 +41,8 @@ class voucher_input(View):
         f = vocher_form(request.POST)
         if f.is_valid():
             print(f.cleaned_data)
-            return render(request,'voucher/voucher_input.html', {'form': f})
+            AS = AccountingSubjectCategory.objects.all()
+            return render(request,'voucher/voucher_input.html', {"AS": AS,'form': f})
         else:
-            return render(request, "voucher/voucher_input.html", {"error": f.errors, "form": f})
+            AS = AccountingSubjectCategory.objects.all()
+            return render(request, "voucher/voucher_input.html", {"AS": AS,"error": f.errors, "form": f})
