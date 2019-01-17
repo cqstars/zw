@@ -86,3 +86,15 @@ footer {
         input:focus {
             background-color: yellow;
         }
+/*----------------------------------span 错误样式 -----------------------------      */
+.myerror
+{
+    padding: 2px 2px;
+    display: block;
+    color: #993300;
+}
+.input_error{
+-webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+border-color:rgba(255,0,0,.75);
+-webkit-box-shadow:0 0 12px rgba(251,149,149,3);
+}

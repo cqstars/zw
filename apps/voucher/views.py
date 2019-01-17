@@ -5,22 +5,26 @@ from django.http import HttpResponse
 from django.views.generic import View
 from .form import *
 
-from AccountingSubjects.models import AccountingSubject,AccountingSubject_2,AccountingSubjectCategory
+from AccountingSubjects.models import AccountingSubject, AccountingSubject_2, AccountingSubjectCategory
 from .form import *
+
+
 # Create your views here.
 def index(request):
-    AS=AccountingSubjectCategory.objects.all()
-    return render(request,"voucher/voucher.html",{"AS":AS})
+    AS = AccountingSubjectCategory.objects.all()
+    return render(request, "voucher/voucher.html", {"AS": AS})
 
 
 class voucher_make(View):
-    def get(self,request,*args,**kwargs):
+    def get(self, request, *args, **kwargs):
         AS = AccountingSubjectCategory.objects.all()
         return render(request, "voucher/voucher.html", {"AS": AS})
-    def post(self,requset):
+
+    def post(self, requset):
         voucher_no = requset.POST.get("voucher_no", "")
-        voucherdate= requset.POST.get("voucherdate", "")
+        voucherdate = requset.POST.get("voucherdate", "")
         pass
+
 
 class IndexView(generic.ListView):
     template_name = "voucher/voucher.html"
@@ -28,21 +32,27 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        e=AccountingSubject.objects.get(id=1)
-        c=e.category
+        e = AccountingSubject.objects.get(id=1)
+        c = e.category
         return c
 
+
 class voucher_input(View):
-    def get(self,request):
-        form=vocher_form()
+
+    def get(self, request):
+        # vocherform=vocher_form()
+        # vochercontentForm=vochercontentFormSet()
         AS = AccountingSubjectCategory.objects.all()
-        return render(request, 'voucher/voucher_input.html',{"AS": AS, 'form': form})
-    def post(self,request):
-        f = vocher_form(request.POST)
+        return render(request, 'voucher/voucher_input.html', {"AS": AS})
+
+    def post(self, request):
+        vc_no=request.POST.get("voucher_no","")
+        f = vocher_input_fom(request.POST)
         if f.is_valid():
             print(f.cleaned_data)
             AS = AccountingSubjectCategory.objects.all()
-            return render(request,'voucher/voucher_input.html', {"AS": AS,'form': f})
+            return render(request, 'voucher/voucher_input.html', {"AS": AS})
+
         else:
             AS = AccountingSubjectCategory.objects.all()
-            return render(request, "voucher/voucher_input.html", {"AS": AS,"error": f.errors, "form": f})
+            return render(request, "voucher/voucher_input.html", {"AS": AS,"f":f})

@@ -46,7 +46,9 @@
 {% endblock %}
 {% block content %}
     <div id="AccountingSubjectSelector">
+
         <ul>
+            <li><a onclick="del_ac()">删除设置</a></li>
             {% for i in AS %}
                 <li style="clear: both;" onclick="ac_set(this)">{{ i.name }}
                     <ul>
@@ -74,11 +76,6 @@
             {% endfor %}
         </ul>
     </div>
-
-    <div id="myerror" class="text-center">
-        <img src="{% static 'img/bg/wrong.png' %}" style="display: inline;width: 15px;">你的金额输入有误！
-    </div>
-
     <form id="RegForm" action="{% url 'voucher:voucher_input' %}" method="post" onsubmit="return validate_form(this)">
         <table style="width: 100%">
             <tr>
@@ -86,20 +83,14 @@
 
                 </td>
                 <td><span>凭证日期：</span>
-                    <input type="date" id="txtDate" name="voucherdate" autocomplete="on"/>
+                    <input type="date" id="txtDate" required="required" name="date" autocomplete="on"/>
                 <td><label>字第</label>
-                    <input type="text" autofocus name="voucher_no" placeholder="号"/></td>
+                    <input type="text" autofocus name="voucher_no" required="required" placeholder="号"/></td>
             </tr>
         </table>
         <table class="table" id="voucher_content">
-
             <tr>
-                <td style="width:3%" colspan="2" rowspan="2">
-                    <img src="{% static 'img/bg/Insert_B.png' %}" title="插入栏目" style="cursor:pointer;"
-                         onclick="addtr()">
-                </td>
-
-                <td style="width: 40%;" rowspan="2"><strong>摘要</strong></td>
+                <td style="width: 45%;" rowspan="2"><strong>摘要</strong></td>
                 <td style="width: 10%;text-align: center" colspan="2">
                     <strong>科目设置</strong>
                 </td>
@@ -108,54 +99,192 @@
                 <td class="text-center" style="width: 5%" rowspan="2"><strong>记账√</strong></td>
             </tr>
             <tr>
-
                 <td class="text-center" style="width: 10%">总账科目</td>
                 <td class="text-center" style="width: 10%">明细科目</td>
-
-
             </tr>
-            <tr>
-                <td style="width:3%"></td>
-                <td style="width:2%"><img src="{% static 'img/bg/ac_s.png' %}" title="科目设置">
-                </td>
-                <td style="width: 40%">
-                    <input class="width90" type="text" name="brife_no_1" placeholder="输入摘要" required="required"
-                           autocomplete="on">
+            <tr class="voucher_content">
+                <td style="width: 45%">
+                    <input class="width90" type="text" name="vc_bf_1" placeholder="输入摘要" autocomplete="on">
+                    <span class="myerror"></span>
                 </td>
                 <td style="width: 10%;cursor: pointer;" onclick="subjects_set(this)">
-                    <span></span><input type="hidden" name="ac_no_1">
+                    <span></span><input type="hidden" name="vc_ac_1">
                 </td>
-
                 <td style="width: 10%;text-align: center;"><span></span>
-                    <input type="hidden" class="form-control" name="ac_2_no_1">
+                    <input type="hidden" name="vc_ac2_1">
                 </td>
                 <td style="width: 15%">
-                    <input type="text" name="dr_mount_no_1"
-                           placeholder="借方金额" onchange="validateNum(this)">
-
+                    <input type="text" name="vc_dr_1" placeholder="借方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
                 </td>
                 <td style="width: 15%">
-                    <input type="text" name="cr_mount_no_1" placeholder="贷方金额"
-                           onchange="validateNum(this)">
+                    <input type="text" name="vc_cr_1" placeholder="贷方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
                 </td>
-                <td style="width: 5%;text-align: center"><input type="checkbox" name="isBookkeeping_no_1"></td>
+                <td style="width: 5%;text-align: center"><input type="checkbox" name="vc_isBookkeeping_1"></td>
+            </tr>
+            <tr class="voucher_content">
+                <td style="width: 45%">
+                    <input class="width90" type="text" name="vc_bf_2" placeholder="输入摘要" autocomplete="on">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 10%;cursor: pointer;" onclick="subjects_set(this)">
+                    <span></span><input type="hidden" name="vc_ac_2">
+                </td>
+                <td style="width: 10%;text-align: center;"><span></span>
+                    <input type="hidden" name="vc_ac2_2">
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_dr_2" placeholder="借方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_cr_2" placeholder="贷方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 5%;text-align: center"><input type="checkbox" name="vc_isBookkeeping_2"></td>
+            </tr>
+            <tr class="voucher_content">
+                <td style="width: 45%">
+                    <input class="width90" type="text" name="vc_bf_3" placeholder="输入摘要" autocomplete="on">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 10%;cursor: pointer;" onclick="subjects_set(this)">
+                    <span></span><input type="hidden" name="vc_ac_3">
+                </td>
+                <td style="width: 10%;text-align: center;"><span></span>
+                    <input type="hidden" name="vc_ac2_3">
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_dr_3" placeholder="借方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_cr_3" placeholder="贷方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 5%;text-align: center"><input type="checkbox" name="vc_isBookkeeping_3"></td>
+            </tr>
+            <tr class="voucher_content">
+                <td style="width: 45%">
+                    <input class="width90" type="text" name="vc_bf_4" placeholder="输入摘要" autocomplete="on">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 10%;cursor: pointer;" onclick="subjects_set(this)">
+                    <span></span><input type="hidden" name="vc_ac_4">
+                </td>
+                <td style="width: 10%;text-align: center;"><span></span>
+                    <input type="hidden" name="vc_ac2_4">
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_dr_4" placeholder="借方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_cr_4" placeholder="贷方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 5%;text-align: center"><input type="checkbox" name="vc_isBookkeeping_4"></td>
+            </tr>
+            <tr class="voucher_content">
+                <td style="width: 45%">
+                    <input class="width90" type="text" name="vc_bf_5" placeholder="输入摘要" autocomplete="on">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 10%;cursor: pointer;" onclick="subjects_set(this)">
+                    <span></span><input type="hidden" name="vc_ac_5">
+                </td>
+                <td style="width: 10%;text-align: center;"><span></span>
+                    <input type="hidden" name="vc_ac2_5">
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_dr_5" placeholder="借方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_cr_5" placeholder="贷方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 5%;text-align: center"><input type="checkbox" name="vc_isBookkeeping_5"></td>
+            </tr>
+            <tr class="voucher_content">
+                <td style="width: 45%">
+                    <input class="width90" type="text" name="vc_bf_6" placeholder="输入摘要" autocomplete="on">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 10%;cursor: pointer;" onclick="subjects_set(this)">
+                    <span></span><input type="hidden" name="vc_ac_6">
+                </td>
+                <td style="width: 10%;text-align: center;"><span></span>
+                    <input type="hidden" name="vc_ac2_6">
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_dr_6" placeholder="借方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_cr_6" placeholder="贷方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 5%;text-align: center"><input type="checkbox" name="vc_isBookkeeping_6"></td>
+            </tr>
+            <tr class="voucher_content">
+                <td style="width: 45%">
+                    <input class="width90" type="text" name="vc_bf_7" placeholder="输入摘要" autocomplete="on">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 10%;cursor: pointer;" onclick="subjects_set(this)">
+                    <span></span><input type="hidden" name="vc_ac_7">
+                </td>
+                <td style="width: 10%;text-align: center;"><span></span>
+                    <input type="hidden" name="vc_ac2_7">
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_dr_7" placeholder="借方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_cr_7" placeholder="贷方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 5%;text-align: center"><input type="checkbox" name="vc_isBookkeeping_7"></td>
+            </tr>
+            <tr class="voucher_content">
+                <td style="width: 45%">
+                    <input class="width90" type="text" name="vc_bf_8" placeholder="输入摘要" autocomplete="on">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 10%;cursor: pointer;" onclick="subjects_set(this)">
+                    <span></span><input type="hidden" name="vc_ac_8">
+                </td>
+                <td style="width: 10%;text-align: center;"><span></span>
+                    <input type="hidden" name="vc_ac2_8">
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_dr_8" placeholder="借方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 15%">
+                    <input type="text" name="vc_cr_8" placeholder="贷方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
+                </td>
+                <td style="width: 5%;text-align: center"><input type="checkbox" name="vc_isBookkeeping_8"></td>
             </tr>
 
 
-            <tr class="success">
-                <td style="width:3%" colspan="3">
+            <tr>
+                <td style="width:45%">
                     <span>附件</span>
-                    <input type="text" name="enclosure" id="enclosure" class="form-control"
-                           aria-describedby="sizing-addon3" placeholder="张">
+                    <input type="text" name="enclosure" id="enclosure" placeholder="张">
                 </td>
                 <td style="width: 10%;text-align: right" colspan="2">合计：</td>
                 <td style="width: 15%">
-                    <input type="text" class="form-control" name="total_drmount"
-                           placeholder="合计借方金额" onchange="validateNum(this)">
+                    <input type="text" name="total_drmount" placeholder="合计借方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
                 </td>
                 <td style="width: 15%">
-                    <input type="text" name="total_crmount"
-                           placeholder="合计贷方金额" onchange="validateNum(this)">
+                    <input type="text" name="total_crmount" placeholder="合计贷方金额" onchange="validate_validateNum(this)">
+                    <span class="myerror"></span>
                 </td>
                 <td style="width: 5%;text-align: center"><input type="checkbox" name="isbookkeeping"></td>
             </tr>
@@ -196,7 +325,7 @@
             </tr>
             <tr>
                 <td>
-                    {{ form }}{{ form.errors }}
+                    {{ f.errors }}
                 </td>
                 <td colspan="4" style="text-align: right">
                     <button type="submit" class="btn btn-primary">提交</button>
@@ -208,80 +337,39 @@
 
     </form>
 
-
-    </div>
 {% endblock %}
 {% block js %}
     <script type="text/javascript">
-        //Validator
-        function validateNum(a) {
-            var parent = a.parentNode;
-            var patrn = /^-?\d+\.?\d{0,2}$/;
-            if (patrn.test(a.value)) {
-                console.log(a.value);
-                parent.classList.remove('has-warning');
-                document.getElementById('myerror').style.visibility = 'hidden';
+        //Validator验证
+        function validate_validateNum(field) {
+            with (field) {
+                var parent = field.parentNode;
+                var patrn = /^-?\d+\.?\d{0,2}$/;
+                if (patrn.test(value)) {
+                    field.classList.remove('input_error');
+                    parent.querySelector("span").innerHTML = "";
+                    return true
+                }
+                else {
+                    field.setAttribute('class', 'input_error');
+                    parent.querySelector("span").innerHTML = "×输入金额有误"
+                    return false
+                }
             }
-            else {
-                a.value = "";
-                parent.setAttribute('class', 'has-warning');
-                a.focus();
-                a.select();
-
-                document.getElementById('myerror').style.top = a.getBoundingClientRect().y - 40 + 'px';
-                document.getElementById('myerror').style.left = a.getBoundingClientRect().x - 20 + 'px';
-                document.getElementById('myerror').style.visibility = 'visible';
-
-            }
-
         }
 
-    </script>
-    <script type="text/javascript">
-        function addtr() {
-            if (confirm("插入明细栏？")) {
+        function validate_form(thisform) {
+            with (thisform) {
+                console.log(thisform);
+                /* if (validate_validateNum() == false) {
 
-                var tb = document.getElementById("voucher_content");
-                var trIndex = tb.rows.length - 1;
-                var newTr = tb.insertRow(trIndex);//添加新行，trIndex就是要添加的位置
-                var newTd0 = newTr.insertCell();
-                newTd0.innerHTML = "<img src=\"{% static 'img/bg/deletetr.png' %}\" title=\"删除栏目\" onclick=\"deltr(this)\">";
-                var newTd01 = newTr.insertCell();
-                newTd01.innerHTML = "<img src=\"{% static 'img/bg/ac_s.png' %}\" title=\"科目设置\">";
-                var newTd1 = newTr.insertCell();
-                newTd1.innerHTML = "<input type=\"text\" name=\"brife_no_" + trIndex + "\" placeholder=\"输入摘要\"  style=\"width: 90%;\">";
-                var newTd2 = newTr.insertCell();
-                newTd2.setAttribute("onclick", "subjects_set(this)");
-                newTd2.style.cursor = "pointer";
-                newTd2.innerHTML = "<span></span><input type=\"hidden\"  name=\"ac_no_" + trIndex + "\">";
-                var newTd3 = newTr.insertCell();
-                newTd3.style = "width: 10%;";
-                newTd3.innerHTML = "<span></span> <input type=\"hidden\" name=\"ac_2_no_1\">";
-                var newTd4 = newTr.insertCell();
-                newTd4.style = "width: 15%";
-                newTd4.innerHTML = "<input type=\"text\" name=\"dr_mount_no_" + trIndex + "\" placeholder=\"借方金额\" onchange=\"validateNum(this)\">";
-                var newTd5 = newTr.insertCell();
-                newTd5.style = "width: 15%";
-                newTd5.innerHTML = "<input type=\"text\" name=\"dr_mount_no_" + trIndex + "\" placeholder=\"贷方金额\" onchange=\"validateNum(this)\">";
-                var newTd6 = newTr.insertCell();
-                newTd6.style = "width: 5%;";
-                newTd6.innerHTML = "<input type=\"checkbox\" name=\"isBookkeeping_no_" + trIndex + "\">";
-
+                     return false
+                 }*/
+                return true;
             }
-            else {
-            }
-
-        }
-
-        function deltr(a) {
-            if (confirm("确认删除此明细栏？")) {
-                a.parentNode.parentNode.parentNode.removeChild(a.parentNode.parentNode);
-            }
-            else {
-            }
-
         }
     </script>
+
     <script type="text/javascript">
         var accountingsubjectselector = {}
     </script>
@@ -313,17 +401,28 @@
             accountingsubjectselector.selectedtr.querySelector("span").innerHTML = b;
             accountingsubjectselector.selectedtr.querySelector("input").value = a;
             document.querySelector("#AccountingSubjectSelector").style.visibility = "hidden";//设置完成关闭设置框
+            accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("span").innerHTML = "";
+            accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("input").value = "";
         }
 
         function SubjectSelect2(a, b, c, d) {
             accountingsubjectselector.selectedtr.querySelector("span").innerHTML = b;
             accountingsubjectselector.selectedtr.querySelector("input").value = a;
-            accountingsubjectselector.selectedtr.parentNode.cells[4].querySelector("span").innerHTML = d;
-            accountingsubjectselector.selectedtr.parentNode.cells[4].querySelector("input").value = c;
+            accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("span").innerHTML = d;
+            accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("input").value = c;
             document.querySelector("#AccountingSubjectSelector").style.visibility = "hidden";//设置完成关闭设置框
         }
 
+        //点击删除设置
+        function del_ac() {
+            accountingsubjectselector.selectedtr.querySelector("span").innerHTML = "";
+            accountingsubjectselector.selectedtr.querySelector("input").value = "";
+            accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("span").innerHTML = "";
+            accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("input").value = "";
+            document.querySelector("#AccountingSubjectSelector").style.visibility = "hidden";//设置完成关闭设置框
+        }
     </script>
+
 
 
 
