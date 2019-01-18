@@ -46,13 +46,40 @@ class voucher_input(View):
         return render(request, 'voucher/voucher_input.html', {"AS": AS})
 
     def post(self, request):
-        vc_no=request.POST.get("voucher_no","")
         f = vocher_input_fom(request.POST)
         if f.is_valid():
             print(f.cleaned_data)
-            AS = AccountingSubjectCategory.objects.all()
-            return render(request, 'voucher/voucher_input.html', {"AS": AS})
+            voucherkey = ['date', 'voucher_no','accounting_supervisor','enclosure', 'total_dr','total_cr','book_keepinger','cashier','auditor','order_makinger','isbookkeeping']
+            voucherobj = dict([(key, f.cleaned_data[key]) for key in voucherkey ])
+            try:
+                print(voucherobj)
+                v=voucher.objects.create(**voucherobj)
+                # v.objects.id
 
+            except Exception as e:
+                AS = AccountingSubjectCategory.objects.all()
+                return render(request, 'voucher/voucher_input.html', {"AS": AS,"msg":e})
+            else:
+                vc_content_list = []
+                vc_content_1 = ['vc_bf_1', 'vc_ac_1', 'vc_ac2_1', 'vc_dr_1', 'vc_cr_1', 'vc_isBookkeeping_1']
+                vc_content_1_obj = dict([(key, f.cleaned_data[key]) for key in vc_content_1])
+                vc_content_1_obj["brife"] = vc_content_1_obj.pop("vc_bf_1")
+                vc_content_1_obj["accountingsubject"] = AccountingSubject.objects.get(id=vc_content_1_obj["vc_ac_1"])
+                if(vc_content_1_obj["vc_ac2_1"]):
+                    vc_content_1_obj["accountingsubject_2"] = AccountingSubject_2.objects.get(id=vc_content_1_obj["vc_ac2_1"])
+                else:
+                    vc_content_1_obj["accountingsubject_2"]=None
+                vc_content_1_obj["dr_amount"] = vc_content_1_obj.pop("vc_dr_1")
+                vc_content_1_obj["cr_amount"] = vc_content_1_obj.pop("vc_cr_1")
+                vc_content_1_obj["isbookkeeping"] = vc_content_1_obj.pop("vc_isBookkeeping_1")
+                vc_content_1_obj["voucher_no"] = voucher.objects.get(id=v.id)
+                del vc_content_1_obj['vc_ac_1']
+                del vc_content_1_obj['vc_ac2_1']
+                vc_content_list.append(vc_content_1_obj)
+                voucher_content.objects.create(**vc_content_1_obj)
+                # voucher_content.objects.bulk_create(vc_content_list)
+                AS = AccountingSubjectCategory.objects.all()
+                return render(request, 'voucher/voucher_input.html', {"AS": AS,"msg":"凭证录入成功！"})
         else:
             AS = AccountingSubjectCategory.objects.all()
-            return render(request, "voucher/voucher_input.html", {"AS": AS,"f":f})
+            return render(request, "voucher/voucher_input.html", {"AS": AS, "f": f})

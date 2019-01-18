@@ -1,20 +1,60 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8"/>
+    <link rel="icon" href="{% static 'img/favicon.ico' %}">
     <title>{% block title %}{% endblock %}</title>
-    {% block css %}
-    {% endblock %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <script src="//at.alicdn.com/t/font_988541_hq2y0dccfs.js" type="text/javascript"></script>
-
+    {% block css %}
+    {% endblock %}
 </head>
 <body>
 
+<div class="head clearfix">
+    <div class="headlogo left">
+        <h2><a href="">账务系统</a></h2>
+    </div>
+    <ul class="headnav left" id="headnav">
+
+        <li id="menu_0" class="current-menu">
+            <a href="{% url 'voucher:voucher_input' %}">凭证录入</a>
+        </li>
+        <li id="menu_1">
+            <a href="#">模块管理</a>
+        </li>
+        <li id="menu_2">
+            <a href="#">系统设置</a>
+        </li>
+        <li id="menu_3">
+            <a href="#">扩展管理</a>
+        </li>
+    </ul>
+    <ul class="headlink right clearfix">
+        <li id="link_0">
+            <a href="#">你好，admin</a>
+        </li>
+        <li id="link_1">
+            <a href="#">隐藏菜单</a>
+        </li>
+        <li id="link_2">
+            <a href="#">首页</a>
+        </li>
+        <li id="link_3">
+            <a href="#">帮助</a>
+        </li>
+        <li id="link_4">
+            <a href="#">退出</a>
+        </li>
+    </ul>
+</div><!--end head-->
 <div class="wrapper">
-{% block breadcrumb %}
-{% endblock %}
+<div class="breadcrumb">
+    {% block breadcrumb %}
+    {% endblock %}
+</div>
+
 {% block content %}
 {% endblock %}
 
@@ -43,8 +83,8 @@
         重庆市巴南区李家沱马王坪正街2号商-7号
 
 </footer>
+
 {% block js %}
 {% endblock %}
-
 </body>
 </html>

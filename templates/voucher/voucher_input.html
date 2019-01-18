@@ -1,4 +1,4 @@
-{% extends "iframe_base.html" %}
+{% extends "Base_2.html" %}
 {% load static %}
 {% block title %}凭证录入{% endblock %}
 {% block css %}
@@ -31,17 +31,21 @@
             display: none;
 
         }
-
+#AccountingSubjectSelector>ul > li > ul{
+    margin-left: 40px;
+}
         .nav > ul > li:hover > a + ul { /*鼠标划过一级菜单的时候二级菜单显示*/
             display: block;
         }
 
         #AccountingSubjectSelector > ul > li > ul > li:hover ul { /*鼠标划过二级菜单的时候对应的三级菜单显示*/
             display: block;
+            margin-left: 40px;
         }
     </style>
 {% endblock %}
 {% block breadcrumb %}
+
     <h3 class="text-center">记账凭证</h3>
 {% endblock %}
 {% block content %}
@@ -275,15 +279,15 @@
             <tr>
                 <td style="width:45%">
                     <span>附件</span>
-                    <input type="text" name="enclosure" id="enclosure" placeholder="张">
+                    <input type="text" name="enclosure" id="enclosure" placeholder="张" required="required">
                 </td>
                 <td style="width: 10%;text-align: right" colspan="2">合计：</td>
                 <td style="width: 15%">
-                    <input type="text" name="total_drmount" placeholder="合计借方金额" onchange="validate_validateNum(this)">
+                    <input type="text" name="total_dr" placeholder="合计借方金额" onchange="validate_validateNum(this)" required="required">
                     <span class="myerror"></span>
                 </td>
                 <td style="width: 15%">
-                    <input type="text" name="total_crmount" placeholder="合计贷方金额" onchange="validate_validateNum(this)">
+                    <input type="text" name="total_cr" placeholder="合计贷方金额" onchange="validate_validateNum(this)" required="required">
                     <span class="myerror"></span>
                 </td>
                 <td style="width: 5%;text-align: center"><input type="checkbox" name="isbookkeeping"></td>
@@ -294,38 +298,32 @@
         <table style="width: 100%">
             <tr>
                 <td>
-                    <span class="input-group-addon" id="sizing-addon10">会计主管</span>
-                    <input type="text" name="accounting_supervisor" id="eaccounting_supervisor"
-                           class="form-control" aria-describedby="sizing-addon10">
+                    <span >会计主管</span>
+                    <input type="text" name="accounting_supervisor" maxlength="12" required="required">
                 </td>
                 <td>
-                    <span class="input-group-addon" id="sizing-addon11">记账</span>
-                    <input type="text" name="book_keepinger" id="book_keepinger"
-                           class="form-control"
-                           aria-describedby="sizing-addon11">
+                    <span >记账</span>
+                    <input type="text" name="book_keepinger" maxlength="12">
                 </td>
                 <td>
-                    <span class="input-group-addon" id="sizing-addon12">出纳</span>
-                    <input type="text" name="cashier" id="cashier"
-                           class="form-control"
-                           aria-describedby="sizing-addon11">
+                    <span>出纳</span>
+                    <input type="text" name="cashier" maxlength="12">
                 </td>
                 <td>
-                    <span class="input-group-addon" id="sizing-addon13">审核</span>
-                    <input type="text" name="auditor" id="auditor"
-                           class="form-control"
-                           aria-describedby="sizing-addon13">
+                    <span >审核</span>
+                    <input type="text" name="auditor" maxlength="12">
                 </td>
                 <td>
-                    <span class="input-group-addon" id="sizing-addon14">制单</span>
-                    <input type="text" name="order_makinger" id="order_makinger"
-                           class="form-control"
-                           aria-describedby="sizing-addon14">
+                    <span >制单</span>
+                    <input type="text" name="order_makinger" maxlength="12" required="required">
                 </td>
             </tr>
             <tr>
                 <td>
                     {{ f.errors }}
+                    {% if msg %}
+                        {{ msg }}
+                    {% endif %}
                 </td>
                 <td colspan="4" style="text-align: right">
                     <button type="submit" class="btn btn-primary">提交</button>
