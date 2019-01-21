@@ -21,6 +21,9 @@ class voucher(models.Model):
     def __str__(self):
         return self.voucher_no
 
+    def get_voucher_content(self):
+        return self.voucher_content_set.all()
+
 class voucher_content(models.Model):
     voucher_no=models.ForeignKey(voucher,on_delete=models.CASCADE,verbose_name="凭证号码",blank=True,null=True,)
     brife=models.CharField(max_length=50,verbose_name="摘要",blank=True,null=True,)

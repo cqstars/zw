@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users',
     'voucher',
     'AccountingSubjects',
+    'ledger',
 ]
 AUTH_USER_MODEL = "users.UserProfile"
 MIDDLEWARE = [

@@ -21,6 +21,7 @@ from django.urls import path, re_path, include
 urlpatterns = [
     path('voucher/', include('voucher.urls','voucher')),
     path('AccountingSubject/', include('AccountingSubjects.urls','AccountingSubject')),
+    path('ledger/', include('ledger.urls','ledger')),
     re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name="index.html"), name="index"),

@@ -31,9 +31,11 @@
             display: none;
 
         }
-#AccountingSubjectSelector>ul > li > ul{
-    margin-left: 40px;
-}
+
+        #AccountingSubjectSelector > ul > li > ul {
+            margin-left: 40px;
+        }
+
         .nav > ul > li:hover > a + ul { /*鼠标划过一级菜单的时候二级菜单显示*/
             display: block;
         }
@@ -281,13 +283,13 @@
                     <span>附件</span>
                     <input type="text" name="enclosure" id="enclosure" placeholder="张" required="required">
                 </td>
-                <td style="width: 10%;text-align: right" colspan="2">合计：</td>
+                <td style="width: 10%;text-align: right" colspan="2" onclick="cal()">合计：</td>
                 <td style="width: 15%">
-                    <input type="text" name="total_dr" placeholder="合计借方金额" onchange="validate_validateNum(this)" required="required">
+                    <input type="text" name="total_dr" placeholder="合计借方金额">
                     <span class="myerror"></span>
                 </td>
                 <td style="width: 15%">
-                    <input type="text" name="total_cr" placeholder="合计贷方金额" onchange="validate_validateNum(this)" required="required">
+                    <input type="text" name="total_cr" placeholder="合计贷方金额">
                     <span class="myerror"></span>
                 </td>
                 <td style="width: 5%;text-align: center"><input type="checkbox" name="isbookkeeping"></td>
@@ -298,11 +300,11 @@
         <table style="width: 100%">
             <tr>
                 <td>
-                    <span >会计主管</span>
+                    <span>会计主管</span>
                     <input type="text" name="accounting_supervisor" maxlength="12" required="required">
                 </td>
                 <td>
-                    <span >记账</span>
+                    <span>记账</span>
                     <input type="text" name="book_keepinger" maxlength="12">
                 </td>
                 <td>
@@ -310,11 +312,11 @@
                     <input type="text" name="cashier" maxlength="12">
                 </td>
                 <td>
-                    <span >审核</span>
+                    <span>审核</span>
                     <input type="text" name="auditor" maxlength="12">
                 </td>
                 <td>
-                    <span >制单</span>
+                    <span>制单</span>
                     <input type="text" name="order_makinger" maxlength="12" required="required">
                 </td>
             </tr>
@@ -346,6 +348,7 @@
                 if (patrn.test(value)) {
                     field.classList.remove('input_error');
                     parent.querySelector("span").innerHTML = "";
+                    cal();
                     return true
                 }
                 else {
@@ -418,6 +421,29 @@
             accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("span").innerHTML = "";
             accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("input").value = "";
             document.querySelector("#AccountingSubjectSelector").style.visibility = "hidden";//设置完成关闭设置框
+        }
+    </script>
+    <script type="text/javascript">
+        //借贷金额汇总
+        function cal() {
+            dr1 = isNaN(parseFloat(document.getElementsByName("vc_dr_1")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_dr_1")[0].value);
+            dr2 = isNaN(parseFloat(document.getElementsByName("vc_dr_2")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_dr_2")[0].value);
+            dr3 = isNaN(parseFloat(document.getElementsByName("vc_dr_3")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_dr_3")[0].value);
+            dr4 = isNaN(parseFloat(document.getElementsByName("vc_dr_4")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_dr_4")[0].value);
+            dr5 = isNaN(parseFloat(document.getElementsByName("vc_dr_5")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_dr_5")[0].value);
+            dr6 = isNaN(parseFloat(document.getElementsByName("vc_dr_6")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_dr_6")[0].value);
+            dr7 = isNaN(parseFloat(document.getElementsByName("vc_dr_7")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_dr_7")[0].value);
+            dr8 = isNaN(parseFloat(document.getElementsByName("vc_dr_8")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_dr_8")[0].value);
+            document.getElementsByName("total_dr")[0].value = parseFloat(dr1 + dr2 + dr3 + dr4 + dr5 + dr6 + dr7 + dr8).toFixed(2);
+            cr1 = isNaN(parseFloat(document.getElementsByName("vc_cr_1")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_cr_1")[0].value);
+            cr2 = isNaN(parseFloat(document.getElementsByName("vc_cr_2")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_cr_2")[0].value);
+            cr3 = isNaN(parseFloat(document.getElementsByName("vc_cr_3")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_cr_3")[0].value);
+            cr4 = isNaN(parseFloat(document.getElementsByName("vc_cr_4")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_cr_4")[0].value);
+            cr5 = isNaN(parseFloat(document.getElementsByName("vc_cr_5")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_cr_5")[0].value);
+            cr6 = isNaN(parseFloat(document.getElementsByName("vc_cr_6")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_cr_6")[0].value);
+            cr7 = isNaN(parseFloat(document.getElementsByName("vc_cr_7")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_cr_7")[0].value);
+            cr8 = isNaN(parseFloat(document.getElementsByName("vc_cr_8")[0].value)) ? 0 : parseFloat(document.getElementsByName("vc_cr_8")[0].value);
+            document.getElementsByName("total_cr")[0].value = parseFloat(cr1 + cr2 + cr3 + cr4 + cr5 + cr6 + cr7 + cr8).toFixed(2);
         }
     </script>
 
