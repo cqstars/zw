@@ -6,12 +6,11 @@
 # @Software: PyCharm
 from django.urls import path
 from . import views
+
 app_name = 'voucher'
 urlpatterns = [
-    path('voucher', views.IndexView.as_view(), name='voucher'),
     path('voucherlist', views.voucherlistView.as_view(), name='voucherlist'),
-    path('voucher_make', views.voucher_make.as_view(), name='voucher_make'),
+    path('bookkeep/<int:id>/', views.bookkeep, name='bookkeep'),
     path('voucher_input', views.voucher_input.as_view(), name='voucher_input'),
     path('', views.index, name='index'),
-
 ]

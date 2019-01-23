@@ -4,9 +4,11 @@ from django.shortcuts import render
 from django.views import generic
 from django.http import HttpResponse
 from django.views.generic import View
-from .form import *
+
 
 from AccountingSubjects.models import AccountingSubject, AccountingSubject_2, AccountingSubjectCategory
+from .models import *
+from ledger.models import *
 from .form import *
 
 
@@ -101,3 +103,71 @@ class voucherlistView(ListView):
     model = voucher
     template_name = 'voucher/voucher_list.html'
     context_object_name = 'voucher_list'
+
+def bookkeep(request,id):
+    iskeep=voucher_content.objects.get(id=id)
+    if iskeep.isbookkeeping:
+        return HttpResponse(False)
+    else:
+        if iskeep.accountingsubject_2:
+            sl=subsidiary_ledger()
+            sl.date=iskeep.voucher_no.date
+            sl.description=iskeep.brife
+            sl.voucher_no=iskeep.voucher_no
+            sl.gen_led_ac=iskeep.accountingsubject
+            sl.sub_led_ac=iskeep.accountingsubject_2
+            if iskeep.dr_amount:
+                sl.dr_amount=iskeep.dr_amount
+            else:
+                sl.dr_amount=0
+                sl.dr_or_cr='cr'
+            if iskeep.cr_amount:
+                sl.cr_amount=iskeep.cr_amount
+            else:
+                sl.cr_amount=0
+                sl.dr_or_cr='dr'
+            try:
+                sl.save()
+                iskeep.isbookkeeping = True
+                iskeep.save()
+            except:
+                return HttpResponse(False)
+            else:
+                return HttpResponse(True)
+
+
+
+        else:
+            ledger_=ledger()
+            ledger_.date=iskeep.voucher_no.date
+            ledger_.description=iskeep.brife
+            ledger_.voucher_no=iskeep.voucher_no
+            ledger_.accountno=iskeep.accountingsubject
+            if iskeep.dr_amount:
+                ledger_.dr_amount=iskeep.dr_amount
+            else:
+                ledger_.dr_amount=0
+                ledger_.dr_or_cr='cr'
+            if iskeep.cr_amount:
+                ledger_.cr_amount=iskeep.cr_amount
+            else:
+                ledger_.cr_amount=0
+                ledger_.dr_or_cr='dr'
+            try:
+                ledger_.save()
+                iskeep.isbookkeeping = True
+                iskeep.save()
+            except:
+                return HttpResponse(False)
+            else:
+                return HttpResponse(True)
+
+
+
+
+
+
+
+
+
+

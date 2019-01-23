@@ -19,6 +19,7 @@ class vocher_form(ModelForm):
 
 
 vochercontentFormSet=inlineformset_factory(voucher,voucher_content,fields=("brife","accountingsubject","accountingsubject_2",),extra=3, can_delete=False, max_num=5)
+
 class vocher_input_fom(forms.Form):
     date=forms.DateField(required=True,error_messages={"required": "不能为空","invalid": "格式错误","min_length": "用户名最短8位"})
     enclosure=forms.IntegerField(required=False,error_messages={"invalid": "格式错误"})

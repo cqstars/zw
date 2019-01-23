@@ -12,9 +12,7 @@ class subsidiary_ledger(models.Model):
     description = models.CharField(max_length=50, verbose_name="摘要", blank=True, null=True )
     dr_amount = models.DecimalField(blank=True, null=True, max_digits=11, decimal_places=2, default=0,verbose_name="借方金额")
     cr_amount = models.DecimalField(blank=True, null=True, max_digits=11, decimal_places=2, default=0,verbose_name="贷方金额")
-    balance = models.DecimalField(blank=True, null=True, max_digits=11, decimal_places=2, default=0,verbose_name="余额")
     dr_or_cr=models.CharField(max_length=2,verbose_name="借或贷",choices=(("dr","借"),("cr","贷")))
-    isbookkeeping = models.BooleanField(blank=True, null=True)
 
     class Meta:
         verbose_name = "明细分类账"
@@ -22,4 +20,24 @@ class subsidiary_ledger(models.Model):
 
     def __str__(self):
         return self.gen_led_ac.name
+    pass
+
+
+class ledger(models.Model):
+    date = models.DateField(verbose_name="凭证日期")
+    description = models.CharField(max_length=50, verbose_name="摘要", blank=True, null=True)
+    accountno=models.ForeignKey(AccountingSubject,on_delete=models.CASCADE,verbose_name="总帐科目",blank=True,null=True)
+    voucher_no = models.ForeignKey(voucher, on_delete=models.CASCADE, verbose_name="凭证字号", blank=True, null=True)
+    description = models.CharField(max_length=50, verbose_name="摘要", blank=True, null=True )
+    dr_amount = models.DecimalField(blank=True, null=True, max_digits=11, decimal_places=2, default=0,verbose_name="借方金额")
+    cr_amount = models.DecimalField(blank=True, null=True, max_digits=11, decimal_places=2, default=0,verbose_name="贷方金额")
+    dr_or_cr=models.CharField(max_length=2,verbose_name="借或贷",choices=(("dr","借"),("cr","贷")))
+
+
+    class Meta:
+        verbose_name = "总分类账"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.accountno
     pass
