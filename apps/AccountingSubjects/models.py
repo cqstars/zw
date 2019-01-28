@@ -11,6 +11,8 @@ class AccountingSubjectCategory(models.Model):
         return self.name
     def get_accountingsubject(self):
         return self.accountingsubject_set.all()
+    def get_myacset(self):
+        return self.myaccountingsubject_set.all()
 
 class AccountingSubject(models.Model):
     category=models.ForeignKey(AccountingSubjectCategory,on_delete=models.CASCADE,verbose_name="会计科目大类")

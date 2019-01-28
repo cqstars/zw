@@ -1,0 +1,61 @@
+{% extends "Base_2.html" %}
+{% load static %}
+{% block title %}总分类账{% endblock %}
+{% block css %}
+    <style>
+        #AccountingSubjectSelector {
+            visibility: hidden;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 10;
+            background-color: #d0e9c6;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 3px 3px 2px #aaaaaa;
+            border: 1px solid;
+            border-radius: 5px;
+            -moz-border-radius: 5px; /* Old Firefox */
+        }
+
+        #AccountingSubjectSelector a {
+            color: #a41515;
+        }
+
+        #AccountingSubjectSelector li {
+            list-style: none;
+            margin-right: 10px;
+        }
+
+        #AccountingSubjectSelector > ul > li ul {
+            display: none;
+
+        }
+
+        #AccountingSubjectSelector > ul > li > ul {
+            margin-left: 40px;
+        }
+
+        .nav > ul > li:hover > a + ul { /*鼠标划过一级菜单的时候二级菜单显示*/
+            display: block;
+        }
+
+        #AccountingSubjectSelector > ul > li > ul > li:hover ul { /*鼠标划过二级菜单的时候对应的三级菜单显示*/
+            display: block;
+            margin-left: 40px;
+        }
+    </style>
+{% endblock %}
+{% block breadcrumb %}
+{% endblock %}
+{% block content %}
+    <div>
+        <ul>
+            {% for i in ledger_list %}
+               <li> {{ i.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+{% block js %}
+{% endblock %}

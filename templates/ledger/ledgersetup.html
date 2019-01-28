@@ -1,0 +1,211 @@
+{% extends "Base_2.html" %}
+{% load static %}
+{% block title %}账页设置{% endblock %}
+{% block css %}
+    <style>
+        #AccountingSubjectSelector {
+            background-color: #d0e9c6;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 2px 2px 1px #efefef;
+            border-radius: 2px;
+            -moz-border-radius: 5px; /* Old Firefox */
+        }
+
+        #AccountingSubjectSelector a {
+            color: #a41515;
+        }
+
+        #AccountingSubjectSelector li {
+            list-style: none;
+            margin-right: 10px;
+        }
+
+        #AccountingSubjectSelector > ul > li ul {
+            display: none;
+
+        }
+
+        #AccountingSubjectSelector > ul > li > ul {
+            margin-left: 40px;
+        }
+
+        .nav > ul > li:hover > a + ul { /*鼠标划过一级菜单的时候二级菜单显示*/
+            display: block;
+        }
+
+        #AccountingSubjectSelector > ul > li > ul > li:hover ul { /*鼠标划过二级菜单的时候对应的三级菜单显示*/
+            display: block;
+            margin-left: 40px;
+        }
+    </style>
+{% endblock %}
+{% block breadcrumb %}
+{% endblock %}
+{% block content %}
+
+    <div class="left">
+        <div id="AccountingSubjectSelector">
+
+            <ul>
+                <li><a onclick="del_ac()">删除设置</a></li>
+                {% for i in AS %}
+                    <li style="clear: both;" onclick="ac_set(this)">{{ i.name }}
+                        <ul>
+                            {% for a in i.get_accountingsubject %}
+                                {% if a.get_accountingsubject_2 %}
+                                    <li>{{ a.name }}
+                                        <ul>
+                                            {% for b in a.get_accountingsubject_2 %}
+                                                <li style="clear: both;"><a
+                                                        onclick="SubjectSelect2('{{ a.id }}','{{ a.name }}','{{ b.id }}','{{ b.name }}')">
+                                                    {{ b.name }}{{ b.subject2_no }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% else %}
+                                    <li><a onclick="SubjectSelect1('{{ a.id }}','{{ a.name }}')">{{ a.name }}</a>
+
+                                    </li>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </ul>
+                    </li>
+                {% endfor %}
+                {% csrf_token %}
+            </ul>
+        </div>
+    </div>
+    <div class="right">
+        <div id="myacset">
+            <ul>
+                {% for i in AS %}
+                    <li onclick="ac_set(this)">{{ i.name }}
+                        <ul>
+                            {% for myi in i.get_myacset %}
+                                <li><a>{{ myi.name }}</a></li>
+                                <uL>
+                                    {% for m2 in myi.get_accountingsubject_2%}
+                                        <li><a>{{ m2.name }}</a></li>
+                                    {% endfor %}
+                                </uL>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+{% endblock %}
+{% block js %}
+
+    <script type="text/javascript">
+
+        //打开一级科目，没有用css ahover来做
+        function ac_set(a) {
+
+            if (a.childNodes[1].style.display == "block") {
+                a.childNodes[1].style.display = "none";
+            } else {
+                a.childNodes[1].style.display = "block";
+            }
+        }
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        //点击科目设置
+        function SubjectSelect1(a, b) {
+            var csrftoken = getCookie('csrftoken');
+            var myconfirm = confirm("❉确认❉:\n" + "▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n" + b + "▶编码为" + a + "\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n" + "作为你的一级科目");
+            if (myconfirm) {
+                var xmlhttp;
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                }
+                else {
+                    // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        str = xmlhttp.responseText;
+                        alert(str);
+                    }
+                }
+
+                xmlhttp.open("POST", "{% url 'ledger:ledgersetup' %}", true);
+                xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                data = "aid=" + a;
+                xmlhttp.setRequestHeader('X-CSRFToken', csrftoken);
+                xmlhttp.send(data);
+            }
+            else {
+                return;
+            }
+
+        }
+
+
+        function SubjectSelect2(a, b, c, d) {
+
+            var csrftoken = getCookie('csrftoken');
+            var myconfirm = confirm("❉确认❉:\n" + "▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n" + b + "▶编码为" + a + "\n作为你的一级科目\n" + d + "▶编码为" + c + "\n作为你的二级科目");
+            if (myconfirm) {
+                var xmlhttp;
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                }
+                else {
+                    // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        str = xmlhttp.responseText;
+                        alert(str);
+                    }
+                }
+
+                xmlhttp.open("POST", "{% url 'ledger:ledgersetup' %}", true);
+                xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                data = "aid=" + a + "&&bid=" + c;
+                xmlhttp.setRequestHeader('X-CSRFToken', csrftoken);
+                xmlhttp.send(data);
+            }
+            else {
+                return;
+            }
+
+        }
+
+        //点击删除设置
+        function del_ac() {
+            accountingsubjectselector.selectedtr.querySelector("span").innerHTML = "";
+            accountingsubjectselector.selectedtr.querySelector("input").value = "";
+            accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("span").innerHTML = "";
+            accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("input").value = "";
+            document.querySelector("#AccountingSubjectSelector").style.visibility = "hidden";//设置完成关闭设置框
+        }
+    </script>
+
+
+{% endblock %}

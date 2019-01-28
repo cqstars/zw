@@ -146,27 +146,28 @@
 
     <script type="text/javascript">
         function A_jax(obj, a) {
-            var ajax = new XMLHttpRequest();
-            urtemp = '{% url 'voucher:bookkeep' 123145 %}';
-            url = urtemp.replace(/123145/, a);
-            ajax.open('get', url);
-            ajax.send();
-            ajax.onreadystatechange = function () {
-                if (ajax.readyState == 4 && ajax.status == 200) {
-                    if (ajax.responseText) {
-                       // console.log(ajax.responseText);输入相应的内容
-                        obj.parentNode.parentNode.cells[5].innerHTML = '<svg class="icon" aria-hidden="true" style="color: #fe9867">\n' +
-                '                                <use xlink:href="#icon-xuanzegouxuanzhuangtaishangpinxiangqing"></use>\n' +
-                '                            </svg>';
-
+            var myconfirm = confirm("确定将\n" + obj.parentNode.parentNode.cells[0].innerHTML + "勾账吗？");
+            if (myconfirm == true) {
+                var ajax = new XMLHttpRequest();
+                urtemp = '{% url 'voucher:bookkeep' 123145 %}';
+                url = urtemp.replace(/123145/, a);
+                ajax.open('get', url);
+                ajax.send();
+                ajax.onreadystatechange = function () {
+                    if (ajax.readyState == 4 && ajax.status == 200) {
+                        if (ajax.responseText) {
+                            // console.log(ajax.responseText);输入相应的内容
+                            obj.parentNode.parentNode.cells[5].innerHTML = '<svg class="icon" aria-hidden="true" style="color: #fe9867">\n' +
+                                '                                <use xlink:href="#icon-xuanzegouxuanzhuangtaishangpinxiangqing"></use>\n' +
+                                '                            </svg>';
+                        }
                     }
-
                 }
             }
-
-
-
+            else {
+            }
         }
+
     </script>
 {% endblock %}
 

@@ -11,76 +11,48 @@
     {% endblock %}
 </head>
 <body>
-
-<div class="head clearfix">
-    <div class="headlogo left">
-        <h2><a href="">账务系统</a></h2>
-    </div>
-    <ul class="headnav left" id="headnav">
-
-        <li id="menu_0" class="current-menu">
-            <a href="{% url 'voucher:voucher_input' %}">凭证录入</a>
-        </li>
-        <li id="menu_1">
-            <a href="{% url 'voucher:voucherlist' %}">凭证勾账</a>
-        </li>
-        <li id="menu_2">
-            <a href="#">系统设置</a>
-        </li>
-        <li id="menu_3">
-            <a href="#">扩展管理</a>
-        </li>
+<div id="nav">
+    <ul style="float: left">
+        <li><a href="">账务系统</a></li>
+        <li><a href="{% url 'voucher:voucher_input' %}">凭证录入</a></li>
+        <li><a href="{% url 'voucher:voucherlist' %}">凭证勾账</a></li>
+        <li><a href="{% url 'ledger:ledgerlist' %}">总账查询</a></li>
+        <li> <a href="{% url 'ledger:ledgersetup' %}">账页设置</a></li>
     </ul>
-    <ul class="headlink right clearfix">
-        <li id="link_0">
-            <a href="#">你好，admin</a>
-        </li>
-        <li id="link_1">
-            <a href="#">隐藏菜单</a>
-        </li>
-        <li id="link_2">
-            <a href="#">首页</a>
-        </li>
-        <li id="link_3">
-            <a href="#">帮助</a>
-        </li>
-        <li id="link_4">
-            <a href="#">退出</a>
-        </li>
-    </ul>
-</div><!--end head-->
-<div class="wrapper">
-<div class="breadcrumb">
+
+</div>
+
+<div class="breadcrumb clearfix">
     {% block breadcrumb %}
     {% endblock %}
 </div>
+<div class="wrapper">
+    {% block content %}
+    {% endblock %}
+</div>
 
-{% block content %}
-{% endblock %}
-
-  </div>
 <footer>
 
-        <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-guoxue"></use>
-        </svg>
-        <strong>重庆圣天数码科技 </strong>
-        <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-shouji"></use>
-        </svg>
-        <abbr title="Phone">联系人：彭先生&nbsp;&nbsp;手机：15310167836</abbr>
-        <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-dianhua"></use>
-        </svg>
-        电话： 023-传真：023-63036703
-        <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-youjian"></use>
-        </svg>
-        <a href="mailto:#">15266320@qq.com</a>
-        <svg class="icon " aria-hidden="true">
-            <use xlink:href="#icon-dizhi"></use>
-        </svg>
-        重庆市巴南区李家沱马王坪正街2号商-7号
+    <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-guoxue"></use>
+    </svg>
+    <strong>重庆圣天数码科技 </strong>
+    <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-shouji"></use>
+    </svg>
+    <abbr title="Phone">联系人：彭先生&nbsp;&nbsp;手机：15310167836</abbr>
+    <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-dianhua"></use>
+    </svg>
+    电话： 023-传真：023-63036703
+    <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-youjian"></use>
+    </svg>
+    <a href="mailto:#">15266320@qq.com</a>
+    <svg class="icon " aria-hidden="true">
+        <use xlink:href="#icon-dizhi"></use>
+    </svg>
+    重庆市巴南区李家沱马王坪正街2号商-7号
 
 </footer>
 

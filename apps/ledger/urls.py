@@ -9,6 +9,8 @@ from . import views
 
 app_name = 'ledger'
 urlpatterns = [
-    # path('', views.index, name='index'),
+    path('ledgerlist', views.ledgerListView.as_view(), name='ledgerlist'),
+    path('ledgersetupaccountingsubject1/<int:id>/', views.ledgersetupaccountingsubject1, name='ledgersetupaccountingsubject1'),
+    path('ledgersetup', views.ledgersetupView.as_view(), name='ledgersetup'),
     # path('account_subject_by_categoryid/<int:id>/', views.account_subject_by_categoryid,name='account_subject_by_categoryid'),
 ]
