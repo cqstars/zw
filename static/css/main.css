@@ -41,6 +41,13 @@ html {
 
 /*顶部导航*/
 #nav {
+    background: -webkit-linear-gradient(#f0fde8, #daf2ca); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#f0fde8, #daf2ca); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#f0fde8, #daf2ca); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#f0fde8, #daf2ca); /* 标准的语法 */
+    height: 70px;
+    line-height: 70px;
+    box-shadow: 1px 1px 5px #d4f0c1;
 }
 
 #nav ul {
@@ -53,7 +60,7 @@ html {
     list-style: none;
     display: inline-block;
     margin-left: 15px;
-    width: 130px;
+    width: 100px;
 }
 
 a {
@@ -181,17 +188,45 @@ input:focus {
 }
 
 #myacset {
-    background-color: #993300;
-    border: 1px solid #353535;
-    cursor: pointer;
+    padding: 20px;
 }
-#myacset li{ list-style: none}
+
+#myacset li {
+    list-style: none;
+    margin-bottom: 15px;
+
+}
+
+#myacset > ul > li ul li {
+    position: relative;
+}
+
+#myacset > ul > li ul li:after {
+    position: absolute;
+    content: url(../img/bg/line.png);
+    top: 0px;
+    left: -75px;
+}
+
+#myacset a {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #8a6d3b;
+    border-radius: 3px;
+    line-height: 30px;
+
+}
 
 #myacset > ul > li ul {
+    margin-left: 100px;
+    margin-top: 10px;
     display: none;
-    margin-left: 40px;
 }
-#myacset > ul > li > ul > li:hover ul { /*鼠标划过二级菜单的时候对应的三级菜单显示*/
-            display: block;
-            margin-left: 40px;
-        }
+
+.txt_red {
+    color: #ff0000;
+}
+
+.txt_blue {
+    color: #505691;
+}

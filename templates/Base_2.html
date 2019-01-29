@@ -6,23 +6,45 @@
     <link rel="icon" href="{% static 'img/favicon.ico' %}">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-    <script src="//at.alicdn.com/t/font_988541_cuxo9o082mw.js" type="text/javascript"></script>
+    <script src="//at.alicdn.com/t/font_988541_4bf8ffs9pj4.js" type="text/javascript"></script>
     {% block css %}
     {% endblock %}
 </head>
 <body>
 <div id="nav">
     <ul style="float: left">
-        <li><a href="">账务系统</a></li>
-        <li><a href="{% url 'voucher:voucher_input' %}">凭证录入</a></li>
-        <li><a href="{% url 'voucher:voucherlist' %}">凭证勾账</a></li>
-        <li><a href="{% url 'ledger:ledgerlist' %}">总账查询</a></li>
-        <li> <a href="{% url 'ledger:ledgersetup' %}">账页设置</a></li>
+        <li><a href="">
+            <svg class="icon t" aria-hidden="true">
+                <use xlink:href="#icon-zhangwuzhongxin"></use>
+            </svg>
+            账务系统</a></li>
+        <li><a href="{% url 'voucher:voucher_input' %}">
+            <svg class="icon t" aria-hidden="true">
+                <use xlink:href="#icon-xinzengpingzheng-normal"></use>
+            </svg>
+            凭证录入</a></li>
+        <li><a href="{% url 'voucher:voucherlist' %}">
+            <svg class="icon t" aria-hidden="true">
+                <use xlink:href="#icon-right"></use>
+            </svg>
+            凭证勾账</a></li>
+        <li><a href="{% url 'ledger:ledgerlist' %}">
+            <svg class="icon t" aria-hidden="true">
+                <use xlink:href="#icon-chaxun1"></use>
+            </svg>
+            总账查询</a></li>
+        <li>
+            <a href="{% url 'ledger:ledgersetup' %}">
+                <svg class="icon t" aria-hidden="true">
+                    <use xlink:href="#icon-shezhi"></use>
+                </svg>
+                账页设置</a>
+        </li>
     </ul>
 
 </div>
 
-<div class="breadcrumb clearfix">
+<div class=" breadcrumb clearfix">
     {% block breadcrumb %}
     {% endblock %}
 </div>
@@ -33,19 +55,19 @@
 
 <footer>
 
-    <svg class="icon" aria-hidden="true">
+    <svg class="icon txt_red" aria-hidden="true">
         <use xlink:href="#icon-guoxue"></use>
     </svg>
-    <strong>重庆圣天数码科技 </strong>
-    <svg class="icon" aria-hidden="true">
+    重庆圣天数码科技
+    <svg class="icon t" aria-hidden="true">
         <use xlink:href="#icon-shouji"></use>
     </svg>
-    <abbr title="Phone">联系人：彭先生&nbsp;&nbsp;手机：15310167836</abbr>
+    联系人：彭先生&nbsp;&nbsp;手机：15310167836
     <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-dianhua"></use>
     </svg>
     电话： 023-传真：023-63036703
-    <svg class="icon" aria-hidden="true">
+    <svg class="icon txt_blue" aria-hidden="true">
         <use xlink:href="#icon-youjian"></use>
     </svg>
     <a href="mailto:#">15266320@qq.com</a>

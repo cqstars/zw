@@ -3,85 +3,64 @@
 {% block title %}凭证录入{% endblock %}
 {% block css %}
     <style>
-        #AccountingSubjectSelector {
+        #myacset {
             visibility: hidden;
             position: absolute;
-            top: 0px;
-            left: 0px;
-            z-index: 10;
-            background-color: #d0e9c6;
-            padding: 10px;
-            cursor: pointer;
-            box-shadow: 3px 3px 2px #aaaaaa;
-            border: 1px solid;
-            border-radius: 5px;
-            -moz-border-radius: 5px; /* Old Firefox */
+            top: 25%;
+            left: 22%;
+            width: 53%;
+            z-index: 1002;
+            overflow: auto;
+            background-color: #e6f9da;
+            border-radius: 3px;
+            box-shadow: 1px 1px 5px #d4f0c1;
         }
 
-        #AccountingSubjectSelector a {
-            color: #a41515;
-        }
 
-        #AccountingSubjectSelector li {
-            list-style: none;
-            margin-right: 10px;
-        }
-
-        #AccountingSubjectSelector > ul > li ul {
-            display: none;
-
-        }
-
-        #AccountingSubjectSelector > ul > li > ul {
-            margin-left: 40px;
-        }
-
-        .nav > ul > li:hover > a + ul { /*鼠标划过一级菜单的时候二级菜单显示*/
-            display: block;
-        }
-
-        #AccountingSubjectSelector > ul > li > ul > li:hover ul { /*鼠标划过二级菜单的时候对应的三级菜单显示*/
-            display: block;
-            margin-left: 40px;
-        }
     </style>
 {% endblock %}
 {% block breadcrumb %}
 
-    <h3 class="text-center">记账凭证</h3>
+
 {% endblock %}
 {% block content %}
-    <div id="AccountingSubjectSelector">
+    <div id="myacset">
+        <div style="margin-bottom: 20px;">
+            <input id="showMaskbtn" type="button" value="关闭" onclick="subjects_close()">
+        </div>
 
         <ul>
             <li><a onclick="del_ac()">删除设置</a></li>
             {% for i in AS %}
-                <li style="clear: both;" onclick="ac_set(this)">{{ i.name }}
+                <li><a onclick="open_accountingsubject(this)">{{ i.name }}</a>
                     <ul>
-                        {% for a in i.get_accountingsubject %}
-                            {% if a.get_accountingsubject_2 %}
-                                <li>{{ a.name }}
+                        {% for myi in i.get_myacset %}
+                            {% if myi.get_accountingsubject_2 %}
+                                <li><a onclick="open_accountingsubject2(this)">{{ myi.name }}
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-xiala3"></use>
+                                    </svg>
+                                </a>
                                     <ul>
-                                        {% for b in a.get_accountingsubject_2 %}
-                                            <li style="clear: both;"><a
-                                                    onclick="SubjectSelect2('{{ a.id }}','{{ a.name }}','{{ b.id }}','{{ b.name }}')">
-                                                {{ b.name }}{{ b.subject2_no }}</a></li>
+                                        {% for m2 in myi.get_accountingsubject_2 %}
+                                            <li>
+                                                <a onclick="SubjectSelect2('{{ myi.id }}','{{ myi.name }}','{{ m2.id }}','{{ m2.name }}')">{{ m2.name }}</a>
+                                            </li>
                                         {% endfor %}
                                     </ul>
                                 </li>
                             {% else %}
-                                <li><a onclick="SubjectSelect1('{{ a.id }}','{{ a.name }}')">{{ a.name }}</a>
-
-                                </li>
+                                <!--准备-->
+                                <li><a onclick="SubjectSelect1('{{ myi.id }}','{{ myi.name }}')">{{ myi.name }}</a></li>
                             {% endif %}
-
                         {% endfor %}
-
                     </ul>
                 </li>
             {% endfor %}
         </ul>
     </div>
+
+    <h3 class="text-center">记账凭证</h3>
     <form id="RegForm" action="{% url 'voucher:voucher_input' %}" method="post" onsubmit="return validate_form(this)">
         <table style="width: 100%">
             <tr>
@@ -378,7 +357,7 @@
         //点击表格格子，打开科目设置框
         function subjects_set(a) {
             accountingsubjectselector.selectedtr = a;
-            var subj = document.querySelector("#AccountingSubjectSelector");
+            var subj = document.querySelector("#myacset ");
             if (subj.style.visibility == "visible") {
                 subj.style.visibility = "hidden";
             }
@@ -387,13 +366,27 @@
             }
         }
 
-        //打开一级科目，没有用css ahover来做
-        function ac_set(a) {
+        function subjects_close(a) {
+            document.querySelector("#myacset").style.visibility = "hidden";//设置完成关闭设置框
+        }
 
-            if (a.childNodes[1].style.display == "block") {
-                a.childNodes[1].style.display = "none";
+        //自己设计的菜单打开一级，没有用css ahover来做
+        function open_accountingsubject(a) {
+            var ul = a.parentNode.querySelector('ul');
+            if (ul.style.display == "block") {
+                ul.style.display = "none";
             } else {
-                a.childNodes[1].style.display = "block";
+                ul.style.display = "block";
+            }
+        }
+
+        //自己设计的菜单打开二级，没有用css ahover来做
+        function open_accountingsubject2(a) {
+            var ul = a.parentNode.querySelector('ul');
+            if (ul.style.display == "block") {
+                ul.style.display = "none";
+            } else {
+                ul.style.display = "block";
             }
         }
 
@@ -401,7 +394,7 @@
         function SubjectSelect1(a, b) {
             accountingsubjectselector.selectedtr.querySelector("span").innerHTML = b;
             accountingsubjectselector.selectedtr.querySelector("input").value = a;
-            document.querySelector("#AccountingSubjectSelector").style.visibility = "hidden";//设置完成关闭设置框
+            document.querySelector("#myacset").style.visibility = "hidden";//设置完成关闭设置框
             accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("span").innerHTML = "";
             accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("input").value = "";
         }
@@ -411,7 +404,7 @@
             accountingsubjectselector.selectedtr.querySelector("input").value = a;
             accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("span").innerHTML = d;
             accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("input").value = c;
-            document.querySelector("#AccountingSubjectSelector").style.visibility = "hidden";//设置完成关闭设置框
+            document.querySelector("#myacset").style.visibility = "hidden";//设置完成关闭设置框
         }
 
         //点击删除设置
@@ -420,7 +413,7 @@
             accountingsubjectselector.selectedtr.querySelector("input").value = "";
             accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("span").innerHTML = "";
             accountingsubjectselector.selectedtr.parentNode.cells[2].querySelector("input").value = "";
-            document.querySelector("#AccountingSubjectSelector").style.visibility = "hidden";//设置完成关闭设置框
+            document.querySelector("#myacset").style.visibility = "hidden";//设置完成关闭设置框
         }
     </script>
     <script type="text/javascript">

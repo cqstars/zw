@@ -82,15 +82,25 @@
         <div id="myacset">
             <ul>
                 {% for i in AS %}
-                    <li onclick="ac_set(this)">{{ i.name }}
+                    <li><a onclick="open_accountingsubject(this)">{{ i.name }}</a>
                         <ul>
                             {% for myi in i.get_myacset %}
-                                <li><a>{{ myi.name }}</a></li>
-                                <uL>
-                                    {% for m2 in myi.get_accountingsubject_2%}
-                                        <li><a>{{ m2.name }}</a></li>
-                                    {% endfor %}
-                                </uL>
+                                {% if myi.get_accountingsubject_2 %}
+                                    <li><a onclick="open_accountingsubject2(this)">{{ myi.name }}
+                                        <svg class="icon" aria-hidden="true">
+                                            <use xlink:href="#icon-xiala3"></use>
+                                        </svg>
+                                    </a>
+                                        <ul>
+                                            {% for m2 in myi.get_accountingsubject_2 %}
+                                                <li><a>{{ m2.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% else %}
+                                    <!--准备-->
+                                    <li><a>{{ myi.name }}</a></li>
+                                {% endif %}
                             {% endfor %}
                         </ul>
                     </li>
@@ -113,6 +123,27 @@
                 a.childNodes[1].style.display = "block";
             }
         }
+
+        //自己设计的菜单打开一级，没有用css ahover来做
+        function open_accountingsubject(a) {
+            var ul = a.parentNode.querySelector('ul');
+            if (ul.style.display == "block") {
+                ul.style.display = "none";
+            } else {
+                ul.style.display = "block";
+            }
+        }
+
+        //自己设计的菜单打开二级，没有用css ahover来做
+        function open_accountingsubject2(a) {
+            var ul = a.parentNode.querySelector('ul');
+            if (ul.style.display == "block") {
+                ul.style.display = "none";
+            } else {
+                ul.style.display = "block";
+            }
+        }
+
 
         function getCookie(name) {
             var cookieValue = null;
