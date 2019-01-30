@@ -75,10 +75,10 @@ class voucher_input(View):
                     if vc_content_obj["vc_bf_" + str(i)] and vc_content_obj["vc_ac_" + str(i)] and (
                             vc_content_obj["vc_dr_" + str(i)] or vc_content_obj["vc_cr_" + str(i)]):
                         vc_content_obj["brife"] = vc_content_obj.pop("vc_bf_" + str(i))
-                        vc_content_obj["accountingsubject"] = AccountingSubject.objects.get(
+                        vc_content_obj["accountingsubject"] = myaccountingsubject.objects.get(
                             id=vc_content_obj["vc_ac_" + str(i)])
                         if (vc_content_obj["vc_ac2_" + str(i)]):
-                            vc_content_obj["accountingsubject_2"] = AccountingSubject_2.objects.get(
+                            vc_content_obj["accountingsubject_2"] = myaccountingsubject_2.objects.get(
                                 id=vc_content_obj["vc_ac2_" + str(i)])
                         else:
                             vc_content_obj["accountingsubject_2"] = None

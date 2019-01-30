@@ -1,5 +1,6 @@
 from django.db import models
-from AccountingSubjects.models import AccountingSubject,AccountingSubject_2
+from AccountingSubjects.models import AccountingSubject,AccountingSubject_2,myaccountingsubject,myaccountingsubject_2
+
 # Create your models here.
 class voucher(models.Model):
     voucher_no=models.CharField(max_length=10,verbose_name="字 第 号")
@@ -27,8 +28,8 @@ class voucher(models.Model):
 class voucher_content(models.Model):
     voucher_no=models.ForeignKey(voucher,on_delete=models.CASCADE,verbose_name="凭证号码",blank=True,null=True,)
     brife=models.CharField(max_length=50,verbose_name="摘要",blank=True,null=True,)
-    accountingsubject=models.ForeignKey(AccountingSubject,on_delete=models.CASCADE,verbose_name="会计科目",blank=True,null=True)
-    accountingsubject_2=models.ForeignKey(AccountingSubject_2,on_delete=models.CASCADE,verbose_name="会计科目二级",blank=True,null=True)
+    accountingsubject=models.ForeignKey(myaccountingsubject,on_delete=models.CASCADE,verbose_name="会计科目",blank=True,null=True)
+    accountingsubject_2=models.ForeignKey(myaccountingsubject_2,on_delete=models.CASCADE,verbose_name="会计科目二级",blank=True,null=True)
     dr_amount = models.DecimalField(blank=True,null=True,max_digits=11, decimal_places=2, default=0, verbose_name="借方金额")
     cr_amount = models.DecimalField(blank=True,null=True,max_digits=11, decimal_places=2, default=0, verbose_name="贷方金额")
     isbookkeeping=models.BooleanField(blank=True,null=True)
