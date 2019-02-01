@@ -1,6 +1,6 @@
 from django.db import models
 
-from AccountingSubjects.models import AccountingSubjectCategory,AccountingSubject,AccountingSubject_2
+from AccountingSubjects.models import AccountingSubjectCategory,myaccountingsubject,myaccountingsubject_2
 from voucher.models import voucher,voucher_content
 
 # Create your models here.
@@ -9,7 +9,7 @@ from voucher.models import voucher,voucher_content
 class ledger(models.Model):
     date = models.DateField(verbose_name="凭证日期")
     description = models.CharField(max_length=50, verbose_name="摘要", blank=True, null=True)
-    accountno=models.ForeignKey(AccountingSubject,on_delete=models.CASCADE,verbose_name="总帐科目",blank=True,null=True)
+    accountno=models.ForeignKey(myaccountingsubject,on_delete=models.CASCADE,verbose_name="总帐科目",blank=True,null=True)
     voucher_no = models.ForeignKey(voucher, on_delete=models.CASCADE, verbose_name="凭证字号", blank=True, null=True)
     description = models.CharField(max_length=50, verbose_name="摘要", blank=True, null=True )
     dr_amount = models.DecimalField(blank=True, null=True, max_digits=11, decimal_places=2, default=0,verbose_name="借方金额")
@@ -27,8 +27,8 @@ class ledger(models.Model):
 
 class subsidiary_ledger(models.Model):
     date = models.DateField(verbose_name="凭证日期")
-    gen_led_ac=models.ForeignKey(AccountingSubject,on_delete=models.CASCADE,verbose_name="总帐科目",blank=True,null=True)
-    sub_led_ac=models.ForeignKey(AccountingSubject_2,on_delete=models.CASCADE,verbose_name="明细科目",blank=True,null=True)
+    gen_led_ac=models.ForeignKey(myaccountingsubject,on_delete=models.CASCADE,verbose_name="总帐科目",blank=True,null=True)
+    sub_led_ac=models.ForeignKey(myaccountingsubject_2,on_delete=models.CASCADE,verbose_name="明细科目",blank=True,null=True)
     voucher_no = models.ForeignKey(voucher, on_delete=models.CASCADE, verbose_name="凭证字号", blank=True, null=True)
     description = models.CharField(max_length=50, verbose_name="摘要", blank=True, null=True )
     dr_amount = models.DecimalField(blank=True, null=True, max_digits=11, decimal_places=2, default=0,verbose_name="借方金额")

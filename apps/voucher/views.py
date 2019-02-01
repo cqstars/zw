@@ -4,9 +4,9 @@ from django.shortcuts import render
 from django.views import generic
 from django.http import HttpResponse
 from django.views.generic import View
+from pure_pagination import PageNotAnInteger,Paginator
 
-
-from AccountingSubjects.models import AccountingSubject, AccountingSubject_2, AccountingSubjectCategory
+from AccountingSubjects.models import AccountingSubject, AccountingSubject_2, AccountingSubjectCategory,myaccountingsubject,myaccountingsubject_2
 from .models import *
 from ledger.models import *
 from .form import *
@@ -90,19 +90,37 @@ class voucher_input(View):
                         del vc_content_obj['vc_ac2_' + str(i)]
                         voucher_content.objects.create(**vc_content_obj)
                     else:
-                        msg += "栏目" + str(i) + "录入无有效内容！"
+                        msg += "栏目" + str(i) + "录入无有效内容※"
                 AS = AccountingSubjectCategory.objects.all()
-                msg += "凭证录入成功！"
+                msg += "凭证录入成功√"
                 return render(request, 'voucher/voucher_input.html', {"AS": AS, "msg": msg})
         else:
             AS = AccountingSubjectCategory.objects.all()
             return render(request, "voucher/voucher_input.html", {"AS": AS, "f": f})
 
+class vou_listview(View):
+    def get(self, request):
+        # 课程机构
+        voucher_list = voucher.objects.all()
+        # org_nums = CourseOrg.objects.count()
+        # 所有城市
+        # all_citys = CityDict.objects.all()
 
-class voucherlistView(ListView):
-    model = voucher
-    template_name = 'voucher/voucher_list.html'
-    context_object_name = 'voucher_list'
+        # 课程分页
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        # 2 表示每页的数量
+        p = Paginator(voucher_list,2,request=request)
+        vo= p.page(page)
+
+        return render(request, "voucher/voucher_list.html", {'vo':vo })
+
+
+
+
+
 
 def bookkeep(request,id):
     iskeep=voucher_content.objects.get(id=id)

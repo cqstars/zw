@@ -230,3 +230,89 @@ input:focus {
 .txt_blue {
     color: #505691;
 }
+
+/*----------------------日期自定义格式，配合datecontrol.js文件使用--------------------------------*/
+#calendarPanel {
+    box-shadow: 2px 2px 2px #d8d8d8;
+    border-radius: 2px;
+}
+
+#calendarPanel table {
+}
+
+#calendarPanel table th {
+    padding: 8px;
+}
+
+#calendarPanel table td {
+    padding: 8px;
+}
+
+#nextMonth, #prevMonth {
+    cursor: pointer;
+}
+
+#calendarYear, #calendarMonth { /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+    width: 80pt;
+    height: 20pt;
+    line-height: 10pt;
+    padding-right: 5pt;
+    text-indent: 4pt;
+    text-align: left;
+    vertical-align: middle;
+    border: 1px solid #999999;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: SimHei;
+    font-size: 18pt;
+    font-weight: 500;
+    color: RGBA(102, 102, 102, 0.7);
+    cursor: pointer;
+    outline: none;
+
+}
+
+#calendarHour, #calendarMinute, #calendarSecond {
+    width: 40pt;
+    height: 20pt;
+    line-height: 10pt;
+    padding-right: 5pt;
+    text-indent: 4pt;
+    text-align: left;
+    vertical-align: middle;
+    border: 1px solid #999999;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: SimHei;
+    font-size: 8pt;
+    font-weight: 200;
+    color: RGBA(102, 102, 102, 0.7);
+    cursor: pointer;
+    outline: none;
+}
+
+#calendarClear, #calendarToday, #calendarClose {
+    box-shadow: 1px 1px 1px #d8d8d8;
+    border-radius: 2px;
+    width: 50px;
+    height: 35px;
+    padding: 1px;
+    cursor: pointer;
+}
+
+.date_setup input {
+    background: url(../img/time.png) right no-repeat;
+    border: 1px solid #4cae4c;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/*-----------------------------------------------------日期控件css结束-------------------------------------------------------------------------*/

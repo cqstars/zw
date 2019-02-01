@@ -15,134 +15,161 @@
 {% block breadcrumb %}
 {% endblock %}
 {% block content %}
-
-
-    {% for i in voucher_list %}
-        <div class="voucher">
-            <table style="width: 100%">
-                <tr>
-                    <td>
-
-                    </td>
-                    <td><span>凭证日期：</span>
-                        {{ i.date }}
-                    <td><label>字第</label>
-                        {{ i.voucher_no }}号
-                    </td>
-                </tr>
-            </table>
-            <table class="table">
-                <tr>
-                    <td style="width: 45%;" rowspan="2"><strong>摘要</strong></td>
-                    <td style="width: 10%;text-align: center" colspan="2">
-                        <strong>科目设置</strong>
-                    </td>
-                    <td class="text-center" style="width: 15%" rowspan="2"><strong>借方金额</strong></td>
-                    <td class="text-center" style="width: 15%" rowspan="2"><strong>贷方金额</strong></td>
-                    <td class="text-center" style="width: 5%" rowspan="2"><strong>记账√</strong></td>
-                </tr>
-                <tr>
-                    <td class="text-center" style="width: 10%">总账科目</td>
-                    <td class="text-center" style="width: 10%">明细科目</td>
-                </tr>
-                {% for vc_detail in i.get_voucher_content %}
-                    <tr class="voucher_content">
-                        <td style="width: 45%">{% if vc_detail.brife %} {{ vc_detail.brife }}{% endif %}
+    <div class="date_setup" style="margin-bottom:10px; ">
+        开始日期：<input type="text" onclick="SetDate(this,'yyyy-MM-dd')"> 结束日期：<input type="text"
+                                                                                  onclick="SetDate(this,'yyyy-MM-dd')">
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-chaxun1"></use>
+        </svg>
+    </div>
+    <div>
+        {% for i in vo.object_list %}
+            <div class="voucher">
+                <table style="width: 100%">
+                    <tr>
+                        <td>
 
                         </td>
-                        <td style="width: 10%;cursor: pointer;">
-                            {% if vc_detail.accountingsubject %}{{ vc_detail.accountingsubject }}{% endif %}
+                        <td><span>凭证日期：</span>
+                            {{ i.date }}
+                        <td><label>字第</label>
+                            {{ i.voucher_no }}号
+                        </td>
+                    </tr>
+                </table>
+                <table class="table">
+                    <tr>
+                        <td style="width: 45%;" rowspan="2"><strong>摘要</strong></td>
+                        <td style="width: 10%;text-align: center" colspan="2">
+                            <strong>科目设置</strong>
+                        </td>
+                        <td class="text-center" style="width: 15%" rowspan="2"><strong>借方金额</strong></td>
+                        <td class="text-center" style="width: 15%" rowspan="2"><strong>贷方金额</strong></td>
+                        <td class="text-center" style="width: 5%" rowspan="2"><strong>记账√</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center" style="width: 10%">总账科目</td>
+                        <td class="text-center" style="width: 10%">明细科目</td>
+                    </tr>
+                    {% for vc_detail in i.get_voucher_content %}
+                        <tr class="voucher_content">
+                            <td style="width: 45%">{% if vc_detail.brife %} {{ vc_detail.brife }}{% endif %}
 
-                        </td>
-                        <td style="width: 10%;text-align: center;">
-                            {% if vc_detail.accountingsubject_2 %}{{ vc_detail.accountingsubject_2 }}{% endif %}
-                        </td>
-                        <td style="width: 15%">
-                            {% if vc_detail.dr_amount %}{{ vc_detail.dr_amount }}{% endif %}
-                        </td>
-                        <td style="width: 15%">
-                            {% if vc_detail.cr_amount %} {{ vc_detail.cr_amount }}{% endif %}
-                        </td>
-                        <td style="width: 5%;text-align: center">{% if vc_detail.isbookkeeping %}
-                            <svg class="icon" aria-hidden="true" style="color: #fe9867">
-                                <use xlink:href="#icon-xuanzegouxuanzhuangtaishangpinxiangqing"></use>
-                            </svg>
-                        {% else %}
-                            <a onclick="A_jax(this,{{ vc_detail.id }})">
-                                <svg class="icon" aria-hidden="true" style="color: #ff0000;cursor: pointer">
-                                    <use xlink:href="#icon-icon-test"></use>
+                            </td>
+                            <td style="width: 10%;cursor: pointer;">
+                                {% if vc_detail.accountingsubject %}{{ vc_detail.accountingsubject }}{% endif %}
+
+                            </td>
+                            <td style="width: 10%;text-align: center;">
+                                {% if vc_detail.accountingsubject_2 %}{{ vc_detail.accountingsubject_2 }}{% endif %}
+                            </td>
+                            <td style="width: 15%">
+                                {% if vc_detail.dr_amount %}{{ vc_detail.dr_amount }}{% endif %}
+                            </td>
+                            <td style="width: 15%">
+                                {% if vc_detail.cr_amount %} {{ vc_detail.cr_amount }}{% endif %}
+                            </td>
+                            <td style="width: 5%;text-align: center">{% if vc_detail.isbookkeeping %}
+                                <svg class="icon" aria-hidden="true" style="color: #fe9867">
+                                    <use xlink:href="#icon-xuanzegouxuanzhuangtaishangpinxiangqing"></use>
                                 </svg>
-                            </a>
-                        {% endif %}
+                            {% else %}
+                                <a onclick="A_jax(this,{{ vc_detail.id }})">
+                                    <svg class="icon" aria-hidden="true" style="color: #ff0000;cursor: pointer">
+                                        <use xlink:href="#icon-icon-test"></use>
+                                    </svg>
+                                </a>
+                            {% endif %}
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+
+
+                    <tr style="background-color: #d7ded4">
+                        <td style="width:45%">
+                            <span>附件</span>
+                            {{ i.enclosure }}
+                        </td>
+                        <td style="width: 10%;text-align: right" colspan="2" onclick="cal()">合计：</td>
+                        <td style="width: 15%">
+                            {{ i.total_dr }}
+                        </td>
+                        <td style="width: 15%">
+                            {{ i.total_cr }}
+                        </td>
+                        <td style="width: 5%;text-align: center">
+                        </td>
+                    </tr>
+                </table>
+
+
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            <span>会计主管：</span>
+                            {{ i.accounting_supervisor }}
+                        </td>
+                        <td>
+                            <span>记账：</span>
+                            {{ i.book_keepinger }}
+                        </td>
+                        <td>
+                            <span>出纳：</span>
+                            {{ i.cashier }}
+                        </td>
+                        <td>
+                            <span>审核：</span>
+                            {{ i.auditor }}
+                        </td>
+                        <td>
+                            <span>制单：</span>
+                            {{ i.order_makinger }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ f.errors }}
+                            {% if msg %}
+                                {{ msg }}
+                            {% endif %}
+                        </td>
+                        <td colspan="4" style="text-align: right">
 
                         </td>
                     </tr>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="">
+        <div class="pageturn">
+            <ul class="pagelist">
+                {% if vo.has_previous %}
+                    <li class="long"><a href="?{{ vo.previous_page_number.querystring }}">上一页</a></li>
+                {% endif %}
+
+                {% for page in vo.pages %}
+                    {% if page %}
+                        {% ifequal page vo.number %}
+                            <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                        {% endifequal %}
+                    {% else %}
+                        <li class="none"><a href="">...</a></li>
+                    {% endif %}
                 {% endfor %}
-
-
-
-                <tr style="background-color: #d7ded4">
-                    <td style="width:45%">
-                        <span>附件</span>
-                        {{ i.enclosure }}
-                    </td>
-                    <td style="width: 10%;text-align: right" colspan="2" onclick="cal()">合计：</td>
-                    <td style="width: 15%">
-                        {{ i.total_dr }}
-                    </td>
-                    <td style="width: 15%">
-                        {{ i.total_cr }}
-                    </td>
-                    <td style="width: 5%;text-align: center">
-                    </td>
-                </tr>
-            </table>
-
-
-            <table style="width: 100%">
-                <tr>
-                    <td>
-                        <span>会计主管：</span>
-                        {{ i.accounting_supervisor }}
-                    </td>
-                    <td>
-                        <span>记账：</span>
-                        {{ i.book_keepinger }}
-                    </td>
-                    <td>
-                        <span>出纳：</span>
-                        {{ i.cashier }}
-                    </td>
-                    <td>
-                        <span>审核：</span>
-                        {{ i.auditor }}
-                    </td>
-                    <td>
-                        <span>制单：</span>
-                        {{ i.order_makinger }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {{ f.errors }}
-                        {% if msg %}
-                            {{ msg }}
-                        {% endif %}
-                    </td>
-                    <td colspan="4" style="text-align: right">
-
-                    </td>
-                </tr>
-            </table>
+                {% if vo.has_next %}
+                    <li class="long"><a href="?{{ vo.next_page_number.querystring }}">下一页</a></li>
+                {% endif %}
+            </ul>
         </div>
-    {% endfor %}
-
-
-
-
-
+    </div>
 {% endblock %}
 {% block js %}
+    <script type="text/javascript" src="{% static 'js/datecontrol.js' %}"></script>
 
     <script type="text/javascript">
         function A_jax(obj, a) {

@@ -50,6 +50,8 @@
 {% endblock %}
 {% block content %}
     <div>
+    <input type="text" onclick="SetDate(this,'yyyy-MM-dd')">
+
         <ul>
             {% for i in ledger_list %}
                <li> {{ i.name }}</li>
@@ -58,4 +60,5 @@
     </div>
 {% endblock %}
 {% block js %}
+    <script type="text/javascript" src="{% static 'js/datecontrol.js' %}"></script>
 {% endblock %}

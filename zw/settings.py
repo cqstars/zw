@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'voucher',
     'AccountingSubjects',
     'ledger',
+    'pure_pagination',
 ]
 AUTH_USER_MODEL = "users.UserProfile"
 MIDDLEWARE = [
@@ -131,3 +132,9 @@ STATICFILES_DIRS = [
     ('upload', os.path.join(STATIC_ROOT, 'upload').replace('\\', '/')),
     ('fonts', os.path.join(STATIC_ROOT, 'fonts').replace('\\', '/')),
 ]
+
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 10,
+    'MARGIN_PAGES_DISPLAYED': 2,
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
